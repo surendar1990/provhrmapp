@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.employee.Employee" table="tblemployee" catalog="provhrmapp">
+        <id name="employeeId" type="java.lang.Integer">
+            <column name="employee_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="department" class="com.prov.hrm.department.Department" lazy="false">
+            <column name="department_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="designation" class="com.prov.hrm.designation.Designation" lazy="false">
+            <column name="designation_id" not-null="true" />
+        </many-to-one>
+        <property name="organizationId" type="int" update="false">
+            <column name="organization_id" not-null="true" />
+        </property>
+        <property name="roleId" type="int">
+            <column name="role_id" not-null="true" />
+        </property>
+        <property name="empType" type="string">
+            <column name="emp_type" length="15" not-null="true" />
+        </property>
+        <property name="empNo" type="string" update="false">
+            <column name="emp_no" length="15" not-null="true" />
+        </property>
+        <property name="dateOfJoining" type="string" update="false">
+            <column name="date_of_joining" length="0" not-null="true" />
+        </property>
+        <property name="firstName" type="string" >
+            <column name="first_name" length="25" not-null="true" />
+        </property>
+        <property name="middleName" type="string">
+            <column name="middle_name" length="25" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="25" not-null="true" />
+        </property>
+        <property name="contactNumber" type="string">
+            <column name="contact_number" length="15" not-null="true" />
+        </property>
+        <property name="emailId" type="string">
+            <column name="email_id" length="50" not-null="true" />
+        </property>
+        <property name="panNumber" type="string" update="false">
+            <column name="pan_number" length="10" />
+        </property>
+        <property name="passportNumber" type="string" update="false">
+            <column name="passport_number" length="10" />
+        </property>
+        <property name="passportValidity" type="string">
+            <column name="passport_validity" length="0" />
+        </property>
+        <property name="visaAvailablity" type="string">
+            <column name="visa_availablity" length="1" />
+        </property>
+        <property name="workexpYears" type="java.lang.Float">
+            <column name="workexp_years" precision="5" scale="1" />
+        </property>
+        <property name="insertBy" type="java.lang.Integer" update="false">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string" update="false">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+        
+        <set name="login" inverse="true" cascade="all" >
+			<key column="employee_id"  />
+			<one-to-many class="com.prov.hrm.login.Login"/>
+		</set>
+    </class>
+</hibernate-mapping>

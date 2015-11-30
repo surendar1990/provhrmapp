@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.employeeleave.EmployeeLeave" table="tblempleave" catalog="provhrmapp">
+        <id name="empleaveId" type="java.lang.Integer">
+            <column name="empleave_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="employee" class="com.prov.hrm.employee.Employee" fetch="select" lazy="false" update="false">
+            <column name="employee_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="leaveType" class="com.prov.hrm.leavetype.LeaveType" fetch="select" lazy="false" update="false">
+            <column name="leavetype_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="approvedBy" class="com.prov.hrm.employee.Employee" fetch="select" lazy="false">
+            <column name="approved_by_id" not-null="true" />
+        </many-to-one>
+        <property name="organizationId" type="int" update="false">
+            <column name="organization_id" not-null="true" />
+        </property>
+        <property name="fromDate" type="string">
+            <column name="from_date" length="0" not-null="true" />
+        </property>
+        <property name="fromHfflag" type="java.lang.Boolean">
+            <column name="from_hfflag" />
+        </property>
+        <property name="toDate" type="string">
+            <column name="to_date" length="0" not-null="true" />
+        </property>
+        <property name="toHfflag" type="java.lang.Boolean">
+            <column name="to_hfflag" />
+        </property>
+        <property name="totalDays" type="float">
+            <column name="total_days" precision="3" scale="1" not-null="true" />
+        </property>
+        <property name="empComment" type="string" >
+            <column name="emp_comment" length="500" />
+        </property>
+        <property name="approvalComment" type="string">
+            <column name="approval_comment" length="250" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="15" not-null="true" />
+        </property>
+        <property name="insertBy" type="java.lang.Integer" update="false">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string" update="false">
+            <column name="insert_date"  />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

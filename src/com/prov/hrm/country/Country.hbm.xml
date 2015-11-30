@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.country.Country" table="tblcountry" catalog="provhrmapp">
+        <id name="countryId" type="java.lang.Integer">
+            <column name="country_id" />
+            <generator class="identity" />
+        </id>
+        <property name="country" type="string">
+            <column name="country" length="30" not-null="true" unique="true" />
+        </property>
+        <property name="insertBy" type="java.lang.Integer" update="false">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string" update="false">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer" >
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

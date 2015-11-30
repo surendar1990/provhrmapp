@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.employeesalary.EmployeeSalary" table="tblempsalary" catalog="provhrmapp">
+        <id name="empsalaryId" type="java.lang.Integer">
+            <column name="empsalary_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="employee" class="com.prov.hrm.employee.Employee" lazy="false">
+            <column name="employee_id" not-null="true" />
+        </many-to-one>
+        <property name="organizationId" type="int">
+            <column name="organization_id" not-null="true" />
+        </property>
+        <property name="effectiveFrom" type="string">
+            <column name="effective_from" length="0" not-null="true" />
+        </property>
+        <property name="effectiveTo" type="string">
+            <column name="effective_to" length="0" not-null="true" />
+        </property>
+        <property name="stipend" type="float">
+            <column name="stipend" precision="9" not-null="true" />
+        </property>
+        <property name="basic" type="float">
+            <column name="basic" precision="9" not-null="true" />
+        </property>
+        <property name="hra" type="java.lang.Float">
+            <column name="hra" precision="9" />
+        </property>
+        <property name="convenyanceAllowance" type="java.lang.Float">
+            <column name="convenyance_allowance" precision="9" />
+        </property>
+        <property name="vehicleAllowance" type="java.lang.Float">
+            <column name="vehicle_allowance" precision="9" />
+        </property>
+        <property name="medicalAllowance" type="java.lang.Float">
+            <column name="medical_allowance" precision="9" />
+        </property>
+        <property name="specialAllowance" type="java.lang.Float">
+            <column name="special_allowance" precision="9" />
+        </property>
+        <property name="sodexoAllowance" type="java.lang.Float">
+            <column name="sodexo_allowance" precision="9" />
+        </property>
+        <property name="educationAllowance" type="java.lang.Float">
+            <column name="education_allowance" precision="9" />
+        </property>
+        <property name="pfDeduction" type="java.lang.Float">
+            <column name="pf_deduction" precision="9" />
+        </property>
+        <property name="voluntarypfDeduction" type="java.lang.Float">
+            <column name="voluntarypf_deduction" precision="9" />
+        </property>
+        <property name="proftaxDeduction" type="java.lang.Float">
+            <column name="proftax_deduction" precision="9" />
+        </property>
+        <property name="esicDeduction" type="java.lang.Float">
+            <column name="esic_deduction" precision="9" />
+        </property>
+        <property name="incometaxDeduction" type="java.lang.Float">
+            <column name="incometax_deduction" precision="9" />
+        </property>
+        <property name="totalEarning" type="java.lang.Float">
+            <column name="total_earning" precision="9" />
+        </property>
+        <property name="totalDeduction" type="java.lang.Float">
+            <column name="total_deduction" precision="9" />
+        </property>
+        <property name="grossSalary" type="java.lang.Float">
+            <column name="gross_salary" precision="9" />
+        </property>
+        <property name="netSalary" type="java.lang.Float">
+            <column name="net_salary" precision="9" />
+        </property>
+        <property name="insertBy" type="java.lang.Integer">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="timestamp">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
