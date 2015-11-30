@@ -1,6 +1,13 @@
 package com.prov.hrm.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+
+
+
 
 
 
@@ -48,6 +55,7 @@ import com.prov.hrm.employeeidproof.EmployeeIdproof;
 import com.prov.hrm.employeeidproof.EmployeeIdproofDAOImpl;
 import com.prov.hrm.employeeleave.EmployeeLeave;
 import com.prov.hrm.employeeleave.EmployeeLeaveDAOImpl;
+import com.prov.hrm.employeeleaveeligibility.EmpLeaveEligileValues;
 import com.prov.hrm.employeeleaveeligibility.EmployeeLeaveEligibility;
 import com.prov.hrm.employeeleaveeligibility.EmployeeLeaveEligibilityDAOImpl;
 import com.prov.hrm.employeemarital.EmployeeMarital;
@@ -1935,27 +1943,109 @@ public class ProvHrmController {
 	
 	
 	
-	// Get empleaveeligibility by employeeId
-		@RequestMapping(value = "/Empleaveeligiblity/{employeeId}", method = RequestMethod.GET)
-		public ResponseEntity<List<EmployeeLeaveEligibility>> getEmployeeLeaveEligibilityById(
-				@PathVariable int employeeId,@RequestHeader int data) {
+	// Get empleaveeligibility by empleaveeligibilityId
+		@RequestMapping(value = "/Empleaveeligiblity/{empleaveeligibilityId}", method = RequestMethod.GET)
+		public Object getEmployeeLeaveEligibilityById(@RequestHeader int data,
+				@PathVariable int empleaveeligibilityId) {
 			try {
 				employeeleaveeligibilitydao = new EmployeeLeaveEligibilityDAOImpl();
-				List<EmployeeLeaveEligibility> employeeleaveeligibility = employeeleaveeligibilitydao
-						.getEmployeeLeaveEligibilityById(employeeId,data);
-				if (employeeleaveeligibility != null) {
-					return new ResponseEntity<List<EmployeeLeaveEligibility>>(
-							employeeleaveeligibility, HttpStatus.OK);
+				List<EmployeeLeaveEligibility> employeeleaveeligibility = (List<EmployeeLeaveEligibility>) employeeleaveeligibilitydao.getEmployeeLeaveEligibilityById(empleaveeligibilityId, data);
+				
+				List<EmpLeaveEligileValues> ListEmpLeaveEligileValues= new ArrayList<EmpLeaveEligileValues>();
+				//JSONArray jsonarray1=new JSONArray();
+				Integer empleaveeligibility_id;
+				Integer organization_id;
+				 Integer employee_id;
+				 Date from_date = null;
+				 Date to_date = null;
+				 Integer eligibilitydays;
+				 Integer leavetype_id;
+				 String leavetype = null;
+				 Integer totaleligible_days;
+				 String leave_description = null;
+				 String flag;
+				 String fd=null;
+				 String td=null;
+				 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+				 if (employeeleaveeligibility != null) {
+				for (Object object1 : employeeleaveeligibility) {
+					
+					 Object array[] = (Object[]) object1;
+
+					empleaveeligibility_id = (Integer) array[0];
+	                organization_id = (Integer) array[1];
+	                if(array[2]!=null)
+	                {
+	                employee_id = (Integer) array[2]; }
+	                else
+	                {
+	                	 employee_id=0;	
+	                }
+	                from_date = (Date) array[3];
+	                to_date = (Date) array[4];
+	                if(from_date!=null && to_date!=null){
+	                fd=format.format(from_date);
+	                td=format.format(to_date);
+	                }
+					if(array[5]!=null)
+					{
+					eligibilitydays=(Integer) array[5];
+					}
+					else
+					{
+						eligibilitydays=0;
+					}
+
+					leavetype_id=(Integer) array[6];
+	                leavetype = (String) array[7];
+	                totaleligible_days = (Integer) array[8];
+	                leave_description = (String) array[9];
+
+					
+					if(array[0]==null)
+					{
+						flag ="L";
+					}
+					else
+					{
+						flag="E";
+					}
+					EmpLeaveEligileValues jsonobject1= new EmpLeaveEligileValues();
+					
+					
+					jsonobject1.setEmpleaveeligibility_id(empleaveeligibilityId);
+					jsonobject1.setOrganization_id(organization_id);
+					jsonobject1.setEmployee_id(employee_id);
+					jsonobject1.setFrom_date(fd);
+					jsonobject1.setTo_date(td);
+					jsonobject1.setEligibilitydays(eligibilitydays);
+					jsonobject1.setLeavetype_id(leavetype_id);
+					jsonobject1.setLeavetype(leavetype);
+				    jsonobject1.setTotaleligible_days(totaleligible_days);
+					jsonobject1.setLeave_description(leave_description);
+					jsonobject1.setFlag(flag);
+					ListEmpLeaveEligileValues.add(jsonobject1);
+					//return jsonobject1;
+			}
+		
+				
+				System.out.println(ListEmpLeaveEligileValues);
+				
+				return  ListEmpLeaveEligileValues;
+				
 				} else {
-					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+					return null;
+					//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 				}
 			} catch (HibernateException e) {
 				e.printStackTrace();
-				return new ResponseEntity<List<EmployeeLeaveEligibility>>(
+			return null;
+				/*return new ResponseEntity<List<EmployeeLeaveEligibility>>(
 						HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			*/}
+			//return empleaveeligibilityId;
 		}
-
 
 	// Insert a record into empleaveeligibility
 	@RequestMapping(value = "Empleaveeligiblity", method = RequestMethod.POST, headers = "content-type=application/json")
