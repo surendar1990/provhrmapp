@@ -3,11 +3,13 @@ package com.prov.hrm.leavetype;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FlushMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.prov.hrm.idtype.Idtype;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
@@ -62,31 +64,36 @@ public class LeaveTypeDAOImpl implements LeaveTypeDAO {
 	}
 
 	@Override
-	public int addLeaveType(LeaveType leavetype) throws HibernateException,
-			ConstraintViolationException {
+	public int addLeaveType(LeaveType leavetype)throws HibernateException,
+	ConstraintViolationException,MySQLIntegrityConstraintViolationException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		int status = 0;
 		try {
 			session.beginTransaction();
+			session.setFlushMode(FlushMode.COMMIT);
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
 			leavetype.setInsertDate(date.toString());
 			leavetype.setUpdateDate(date.toString());
 			session.save(leavetype);
 			status = 1;
-			return status;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 0;
-		} finally {
 			session.getTransaction().commit();
-			
+			return status;
+
 		}
+
+		catch (ConstraintViolationException e) {
+			System.out.println(e.getMessage());
+			throw new ConstraintViolationException(e.getMessage(), e.getSQLException(),e.getCause().getMessage());
+		
+		}
+
 	}
+
 
 	@Override
 	public int updateLeaveType(LeaveType leavetype) throws HibernateException,
-			ConstraintViolationException {
+			ConstraintViolationException,MySQLIntegrityConstraintViolationException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		int status = 0;
 		try {
@@ -106,7 +113,13 @@ public class LeaveTypeDAOImpl implements LeaveTypeDAO {
 				return status;
 			}
 
-		} catch (Exception e) {
+		} 
+		catch (ConstraintViolationException e) {
+			System.out.println(e.getMessage());
+			throw new ConstraintViolationException(e.getMessage(), e.getSQLException(),e.getCause().getMessage());
+		
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			return status;
 		} finally {
