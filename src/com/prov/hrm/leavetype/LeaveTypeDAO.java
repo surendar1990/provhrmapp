@@ -8,6 +8,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 public interface LeaveTypeDAO {
+	public List<LeaveType> getAllLeaveTypenodate(int organizationId);
 	public List<LeaveType> getAllLeaveType(int organizationId,String fromDate,String toDate);
 
 	public int addLeaveType(LeaveType leaveType)throws HibernateException, ConstraintViolationException, MySQLIntegrityConstraintViolationException, HibernateException, ConstraintViolationException, MySQLIntegrityConstraintViolationException;

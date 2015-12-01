@@ -3028,12 +3028,12 @@ public class ProvHrmController {
 	}
 
 	// Get all the record in leavetype
-	@RequestMapping(value = "/LeaveType/{fromdate}/{todate}", method = RequestMethod.GET)
-	public ResponseEntity<List<LeaveType>> getAllLeaveType(
-			@RequestHeader int data, @PathVariable String fromdate,@PathVariable String todate) {
+	@RequestMapping(value = "/LeaveTypenodate", method = RequestMethod.GET)
+	public ResponseEntity<List<LeaveType>> getAllLeaveTypenodate(
+			@RequestHeader int data) {
 		try {
 			leavetypedao = new LeaveTypeDAOImpl();
-			List<LeaveType> leavetype = leavetypedao.getAllLeaveType(data,fromdate,todate);
+			List<LeaveType> leavetype = leavetypedao.getAllLeaveTypenodate(data);
 			return new ResponseEntity<List<LeaveType>>(leavetype, HttpStatus.OK);
 		} catch (HibernateException he) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -3043,109 +3043,123 @@ public class ProvHrmController {
 		}
 	}
 
-
-	// Insert a record into leavetype
-		@RequestMapping(value = "/LeaveType", method = RequestMethod.POST, headers = "Accept=application/json")
-		public ResponseEntity<String> addLeaveType(@RequestBody String addLeaveType) {
-			responseHeader.set("Content-type", "text/plain");
-			try {
-				LeaveType leavetype = (LeaveType) convertJsonToObject(addLeaveType,
-						LeaveType.class);
-				leavetypedao = new LeaveTypeDAOImpl();
-				int status = leavetypedao.addLeaveType(leavetype);
-				if (status == 0) {
-					return new ResponseEntity<String>("Error in inserting data",
-							responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
-				} else {
-					return new ResponseEntity<String>("Inserted Succesfully",
-							responseHeader, HttpStatus.OK);
-				}
-			} catch (ConstraintViolationException ce) {
-				return new ResponseEntity<String>(ce.getConstraintName()+"Already Present In DataBase",
-						HttpStatus.INTERNAL_SERVER_ERROR);
-				/*return new ResponseEntity<String>("+++"+ce.getConstraintName()+"++++"+ce.getSQLState()
-						+ " :Error in SQL to database",
-						HttpStatus.INTERNAL_SERVER_ERROR);*/
-			}catch (HibernateException he) {
-				return new ResponseEntity<String>(he.getMessage()
-						+ " :Error in connecting to database",
-						HttpStatus.INTERNAL_SERVER_ERROR);
-			} catch (Exception e) {
-				//e.printStackTrace();
-				System.out.println(e.getMessage());
-				return new ResponseEntity<String>("Duplicate Entry "
-						+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-
-		}
-		// Delete a record in leavetype
-		@RequestMapping(value = "/LeaveType/{leavetypeId}", method = RequestMethod.DELETE)
-		public ResponseEntity<String> deleteLeaveType(@PathVariable int leavetypeId) {
-			responseHeader.set("Content-type", "text/plain");
+	// Get all the record in leavetype eith date
+		@RequestMapping(value = "/LeaveType/{fromdate}/{todate}", method = RequestMethod.GET)
+		public ResponseEntity<List<LeaveType>> getAllLeaveType(
+				@RequestHeader int data, @PathVariable String fromdate,@PathVariable String todate) {
 			try {
 				leavetypedao = new LeaveTypeDAOImpl();
-				int status = leavetypedao.deleteLeaveType(leavetypeId);
-				if (status == 0) {
-					return new ResponseEntity<String>("Error in deleting data",
-							responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
-				} else {
-					return new ResponseEntity<String>("Deleted Succesfully",
-							responseHeader, HttpStatus.OK);
-				}
-
-			} catch (ConstraintViolationException ce) {
-				ce.printStackTrace();
-				return new ResponseEntity<String>(ce.getConstraintName(),
-						HttpStatus.BAD_REQUEST);
+				List<LeaveType> leavetype = leavetypedao.getAllLeaveType(data,fromdate,todate);
+				return new ResponseEntity<List<LeaveType>>(leavetype, HttpStatus.OK);
 			} catch (HibernateException he) {
-				return new ResponseEntity<String>(he.getMessage()
-						+ " :Error in connecting to database",
-						HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			} catch (Exception e) {
 				e.printStackTrace();
-				return new ResponseEntity<String>("Something Went wrong "
-						+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+		}		
+
+	// Insert a record into leavetype
+	@RequestMapping(value = "/LeaveType", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<String> addLeaveType(@RequestBody String addLeaveType) {
+		responseHeader.set("Content-type", "text/plain");
+		try {
+			LeaveType leavetype = (LeaveType) convertJsonToObject(addLeaveType,
+					LeaveType.class);
+			leavetypedao = new LeaveTypeDAOImpl();
+			int status = leavetypedao.addLeaveType(leavetype);
+			if (status == 0) {
+				return new ResponseEntity<String>("Error in inserting data",
+						responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				return new ResponseEntity<String>("Inserted Succesfully",
+						responseHeader, HttpStatus.OK);
+			}
+		} catch (ConstraintViolationException ce) {
+			return new ResponseEntity<String>(ce.getConstraintName()+"Duplicate Entry Already Present In DataBase",responseHeader,
+					HttpStatus.INTERNAL_SERVER_ERROR);
+			/*return new ResponseEntity<String>("+++"+ce.getConstraintName()+"++++"+ce.getSQLState()
+					+ " :Error in SQL to database",
+					HttpStatus.INTERNAL_SERVER_ERROR);*/
+		}catch (HibernateException he) {
+			return new ResponseEntity<String>(he.getMessage()
+					+ " :Error in connecting to database",responseHeader,
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			//e.printStackTrace();
+			System.out.println(e.getMessage());
+			return new ResponseEntity<String>("Duplicate Entry "
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		// Update a record in leavetype
-		@RequestMapping(value = "/LeaveType/{leavetypeId}", method = RequestMethod.PUT, headers = "content-type=application/json")
-		public ResponseEntity<String> updateLeaveType(
-				@RequestBody String updateleavetype, @PathVariable int leavetypeId)
-				throws Exception {
-			responseHeader.set("Content-type", "text/plain");
-			try {
-				LeaveType leavetype = (LeaveType) convertJsonToObject(
-						updateleavetype, LeaveType.class);
-				leavetypedao = new LeaveTypeDAOImpl();
-				leavetype.setLeavetypeId(leavetypeId);
-				int status = leavetypedao.updateLeaveType(leavetype);
-				if (status == 0) {
-					return new ResponseEntity<String>("Error in updating data",
-							responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
-				} else {
-					return new ResponseEntity<String>("Updated Succesfully",
-							responseHeader, HttpStatus.OK);
-				}
-			} catch (ConstraintViolationException ce) {
-				return new ResponseEntity<String>(ce.getConstraintName()+"Already Present In DataBase",
-						HttpStatus.INTERNAL_SERVER_ERROR);
-				/*return new ResponseEntity<String>("+++"+ce.getConstraintName()+"++++"+ce.getSQLState()
-						+ " :Error in SQL to database",
-						HttpStatus.INTERNAL_SERVER_ERROR);*/
-			}catch (HibernateException he) {
-				return new ResponseEntity<String>(he.getMessage()
-						+ " :Error in connecting to database",
-						HttpStatus.INTERNAL_SERVER_ERROR);
-			} catch (Exception e) {
-				//e.printStackTrace();
-				System.out.println(e.getMessage());
-				return new ResponseEntity<String>("Duplicate Entry "
-						+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	// Delete a record in leavetype
+	@RequestMapping(value = "/LeaveType/{leavetypeId}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteLeaveType(@PathVariable int leavetypeId) {
+		responseHeader.set("Content-type", "text/plain");
+		try {
+			leavetypedao = new LeaveTypeDAOImpl();
+			int status = leavetypedao.deleteLeaveType(leavetypeId);
+			if (status == 0) {
+				return new ResponseEntity<String>("Error in deleting data",
+						responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				return new ResponseEntity<String>("Deleted Succesfully",
+						responseHeader, HttpStatus.OK);
 			}
 
+		} catch (ConstraintViolationException ce) {
+			ce.printStackTrace();
+			return new ResponseEntity<String>(ce.getConstraintName(),
+					HttpStatus.BAD_REQUEST);
+		} catch (HibernateException he) {
+			return new ResponseEntity<String>(he.getMessage()
+					+ " :Error in connecting to database",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Something Went wrong "
+					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	// Update a record in leavetype
+	@RequestMapping(value = "/LeaveType/{leavetypeId}", method = RequestMethod.PUT, headers = "content-type=application/json")
+	public ResponseEntity<String> updateLeaveType(
+			@RequestBody String updateleavetype, @PathVariable int leavetypeId)
+			throws Exception {
+		responseHeader.set("Content-type", "text/plain");
+		try {
+			LeaveType leavetype = (LeaveType) convertJsonToObject(
+					updateleavetype, LeaveType.class);
+			leavetypedao = new LeaveTypeDAOImpl();
+			leavetype.setLeavetypeId(leavetypeId);
+			int status = leavetypedao.updateLeaveType(leavetype);
+			if (status == 0) {
+				return new ResponseEntity<String>("Error in updating data",
+						responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				return new ResponseEntity<String>("Updated Succesfully",
+						responseHeader, HttpStatus.OK);
+			}
+		} catch (ConstraintViolationException ce) {
+			return new ResponseEntity<String>(ce.getConstraintName()+"Already Present In DataBase",responseHeader,
+					HttpStatus.INTERNAL_SERVER_ERROR);
+			/*return new ResponseEntity<String>("+++"+ce.getConstraintName()+"++++"+ce.getSQLState()
+					+ " :Error in SQL to database",
+					HttpStatus.INTERNAL_SERVER_ERROR);*/
+		}catch (HibernateException he) {
+			return new ResponseEntity<String>(he.getMessage()
+					+ " :Error in connecting to database",responseHeader,
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			//e.printStackTrace();
+			System.out.println(e.getMessage());
+			return new ResponseEntity<String>("Duplicate Entry "
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
+	}
 
 	/*
 	 * Login Table:tbllogin

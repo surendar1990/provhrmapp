@@ -17,6 +17,25 @@ public class LeaveTypeDAOImpl implements LeaveTypeDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<LeaveType> getAllLeaveTypenodate(int organizationId)
+			throws HibernateException, ConstraintViolationException {
+		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			Criteria criteria = session.createCriteria(LeaveType.class);
+			criteria.add(Restrictions.eq("organizationId", organizationId));
+			criteria.add(Restrictions.eq("deleteFlag", false));
+			return criteria.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			
+		
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<LeaveType> getAllLeaveType(int organizationId,String fromDate,String toDate)
 			throws HibernateException, ConstraintViolationException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
