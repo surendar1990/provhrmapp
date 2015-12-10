@@ -4,15 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.prov.hrm.employee.Employee;
+import com.prov.hrm.organization.Organization;
 
 
 
 public class Login 
 {
 	private int loginId;
-	private int organizationId;
-
-//	@JsonIgnoreProperties({"roleId","contactNumber","empType","panNumber","passportNumber","passportValidity","visaAvailablity","workexpYears"})
+	@JsonUnwrapped
+	@JsonIgnoreProperties({"organizationLocation","organizationAddress","organizationContactNumber","organizationContactPerson","organizationUrl","organizationEmail"})
+	private Organization organization;
 	@JsonUnwrapped
 	private Employee employee;
 	private String loginName;
@@ -25,11 +26,11 @@ public class Login
 	@JsonIgnore
 	private boolean superadminFlag;
 	@JsonIgnore
-	private int insertBy;
+	private Integer insertBy;
 	@JsonIgnore
 	private String insertDate;
 	@JsonIgnore
-	private int updateBy;
+	private Integer updateBy;
 	@JsonIgnore
 	private String updateDate;
 	@JsonIgnore
@@ -48,12 +49,13 @@ public class Login
 		this.loginId = loginId;
 	}
 
-	public int getOrganizationId() {
-		return organizationId;
+	
+	public Organization getOrganization() {
+		return organization;
 	}
 
-	public void setOrganizationId(int organizationId) {
-		this.organizationId = organizationId;
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	public Employee getEmployee() {
@@ -104,11 +106,11 @@ public class Login
 		this.superadminFlag = superadminFlag;
 	}
 
-	public int getInsertBy() {
+	public Integer getInsertBy() {
 		return insertBy;
 	}
 
-	public void setInsertBy(int insertBy) {
+	public void setInsertBy(Integer insertBy) {
 		this.insertBy = insertBy;
 	}
 
@@ -120,11 +122,11 @@ public class Login
 		this.insertDate = insertDate;
 	}
 
-	public int getUpdateBy() {
+	public Integer getUpdateBy() {
 		return updateBy;
 	}
 
-	public void setUpdateBy(int updateBy) {
+	public void setUpdateBy(Integer updateBy) {
 		this.updateBy = updateBy;
 	}
 
@@ -144,16 +146,17 @@ public class Login
 		this.deleteFlag = deleteFlag;
 	}
 
-	
 	@Override
 	public String toString() {
-		return "{loginId=" + loginId + ", organizationId=" + organizationId
-				+ ", employee=" + employee + ", loginName=" + loginName
-				+ ", loginPassword=" + loginPassword + ", encryptName="
-				+ encryptName + ", encryptPassword=" + encryptPassword
-				+ ", superadminFlag=" + superadminFlag + ", insertBy="
-				+ insertBy + ", insertDate=" + insertDate + ", updateBy="
-				+ updateBy + ", updateDate=" + updateDate + ", deleteFlag="
-				+ deleteFlag + "}";
+		return "Login [loginId=" + loginId + ", organization="
+				+ organization + ", loginName=" + loginName + ", loginPassword="
+				+ loginPassword + ", encryptName=" + encryptName
+				+ ", encryptPassword=" + encryptPassword + ", superadminFlag="
+				+ superadminFlag + ", insertBy=" + insertBy + ", insertDate="
+				+ insertDate + ", updateBy=" + updateBy + ", updateDate="
+				+ updateDate + ", deleteFlag=" + deleteFlag + "]";
 	}
+	
+
+
 }

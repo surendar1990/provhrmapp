@@ -17,6 +17,7 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import com.prov.hrm.login.Encryption;
 import com.prov.hrm.login.Login;
+import com.prov.hrm.organization.Organization;
 import com.prov.hrm.utility.Mail;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
@@ -145,7 +146,7 @@ public class EmployeeDAOImpl implements EmployeeDAO
 			login.setEmployee(employee);
 			login.setLoginName(employee.getEmailId());
 			login.setEncryptName(encryptname);
-			login.setOrganizationId(employee.getOrganizationId());
+			login.setOrganization(new Organization(employee.getOrganizationId()));
 			login.setLoginPassword("Prov@123");
 			login.setEncryptPassword(encryptpassword);
 			login.setInsertDate(date.toString());

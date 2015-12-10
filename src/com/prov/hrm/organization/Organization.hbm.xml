@@ -44,5 +44,10 @@
         <property name="deleteFlag" type="boolean">
             <column name="delete_flag" not-null="true" />
         </property>
+        
+         <set name="login" inverse="true" cascade="all" >
+			<key column="organization_id"  />
+			<one-to-many class="com.prov.hrm.login.Login"/>
+		</set>
   </class>
 </hibernate-mapping>

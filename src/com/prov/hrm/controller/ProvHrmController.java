@@ -3398,23 +3398,24 @@ public class ProvHrmController {
 	@RequestMapping(value = "/ForgetPassword", method = RequestMethod.POST)
 	public ResponseEntity<String> forgetPassword(@RequestBody String value) 
 	{try {
+		responseHeader.set("Content-type", "text/plain");
 		logindao= new LoginDAOImpl();
 		int status=logindao.forgetPassword(value);
 		if(status==0)
 		{
-			return new ResponseEntity<String>("Error in sending mail "
+			return new ResponseEntity<String>("Error in sending mail ",responseHeader
 					, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		else
 		{
-			return new ResponseEntity<String>("Check your email for your password"
+			return new ResponseEntity<String>("Check your email for your password",responseHeader
 					, HttpStatus.OK);
 		}
 	}
 	catch(Exception e)
 	{
 		return new ResponseEntity<String>("Something Went wrong "
-				+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 		
 	}
@@ -3424,6 +3425,7 @@ public class ProvHrmController {
 	public ResponseEntity<String> changePassword(@RequestBody String value,@PathVariable int loginId) 
 	
 	{try{
+		responseHeader.set("Content-type", "text/plain");
 		logindao= new LoginDAOImpl();
 		
 		JsonParser parser = new JsonParser();
@@ -3431,19 +3433,19 @@ public class ProvHrmController {
 		int status=logindao.changePassword(loginId,json.get("userName").getAsString(),json.get("currentPassword").getAsString(),json.get("newPassword").getAsString(),json.get("updateBy").getAsInt());
 		if(status==0)
 		{
-			return new ResponseEntity<String>("Incorrect password"
+			return new ResponseEntity<String>("Incorrect password",responseHeader
 					, HttpStatus.UNAUTHORIZED);
 		}
 		else
 		{
-			return new ResponseEntity<String>("Password Changed Successfully"
+			return new ResponseEntity<String>("Password Changed Successfully",responseHeader
 					, HttpStatus.OK);
 		}
 	}
 	catch(Exception e)
 	{
 		return new ResponseEntity<String>("Something Went wrong "
-				+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 		
 	}
@@ -3807,10 +3809,10 @@ public class ProvHrmController {
 	 */
 	// Get all record in role
 	@RequestMapping(value = "/Role", method = RequestMethod.GET)
-	public ResponseEntity<List<Role>> getAllRole(@RequestHeader int data) {
+	public ResponseEntity<List<Role>> getAllRole() {
 		try {
 			roledao = new RoleDAOImpl();
-			List<Role> role = roledao.getAllRole(data);
+			List<Role> role = roledao.getAllRole(4);
 			return new ResponseEntity<List<Role>>(role, HttpStatus.OK);
 		} catch (HibernateException he) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

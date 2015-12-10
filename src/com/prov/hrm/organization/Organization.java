@@ -1,6 +1,9 @@
 package com.prov.hrm.organization;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.prov.hrm.login.Login;
 
 public class Organization {
 
@@ -12,6 +15,8 @@ public class Organization {
 	private String organizationContactPerson;
 	private String organizationUrl;
 	private String organizationEmail;
+	@JsonIgnore
+	private Set<Login> login;
 	@JsonIgnore
 	private Integer insertBy;
 	@JsonIgnore
@@ -94,6 +99,15 @@ public class Organization {
 
 	public void setOrganizationEmail(String organizationEmail) {
 		this.organizationEmail = organizationEmail;
+	}
+
+	
+	public Set<Login> getLogin() {
+		return login;
+	}
+
+	public void setLogin(Set<Login> login) {
+		this.login = login;
 	}
 
 	public Integer getInsertBy() {

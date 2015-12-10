@@ -8,10 +8,7 @@
         <id name="loginId" column="login_id">
             <generator class="assigned"/>
         </id>
-        <property name="organizationId" column="organization_id"/>
-        <many-to-one name="employee" class="com.prov.hrm.employee.Employee" lazy="false">
-            <column name="employee_id" not-null="true" />
-        </many-to-one>
+       
         <property name="loginName" column="login_name"/>     
         <property name="loginPassword" column="login_password"/>
         <property name="encryptName" column="encrypt_name"/>
@@ -23,7 +20,11 @@
         <property name="updateDate" column="update_date"/> 
         <property name="deleteFlag" column="delete_flag"/>
         
-        
+        <many-to-one name="employee" class="com.prov.hrm.employee.Employee" lazy="false"
+			column="employee_id"/>
+			
+			<many-to-one name="organization" class="com.prov.hrm.organization.Organization" lazy="false"
+			column="organization_id"/>
         
        </class>
 </hibernate-mapping>

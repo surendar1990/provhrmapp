@@ -1,7 +1,9 @@
 package com.prov.hrm.organization;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -9,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
+import com.prov.hrm.login.Login;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
 public class OrganizationDAOImpl implements OrganizationDAO {
@@ -71,6 +74,13 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 					new java.util.Date().getTime());
 			organization.setInsertDate(date.toString());
 			organization.setUpdateDate(date.toString());
+			Login login=new Login();
+			login.setOrganization(organization);
+			login.setLoginName(organization.getOrganizationEmail());
+			login.setLoginPassword("Admin@123");
+			Set<Login> set=new HashSet<Login>();
+			set.add(login);
+			organization.setLogin(set);
 			session.save(organization);
 			status = 1;
 			return status;
