@@ -1,8 +1,8 @@
 package com.prov.hrm.controller;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -198,11 +198,11 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -234,12 +234,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -264,16 +264,16 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -340,16 +340,16 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -375,12 +375,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -405,16 +405,16 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -486,12 +486,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -518,12 +518,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -553,12 +553,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -622,12 +622,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -652,12 +652,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -684,12 +684,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -751,16 +751,16 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -781,16 +781,16 @@ public class ProvHrmController {
 
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -819,13 +819,12 @@ public class ProvHrmController {
 			return new ResponseEntity<String>(ce.getSQLException().toString(),
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
-			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+			return new ResponseEntity<String>(he.getMessage()+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -887,11 +886,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON input",
+			return new ResponseEntity<String>("Error in JSON input",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internal Server Error",
+			return new ResponseEntity<String>("Internal Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -913,7 +912,7 @@ public class ProvHrmController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internel Server Error",
+			return new ResponseEntity<String>("Internel Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -939,11 +938,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON input",
+			return new ResponseEntity<String>("Error in JSON input",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internel Server Error",
+			return new ResponseEntity<String>("Internel Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
@@ -1007,11 +1006,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON input",
+			return new ResponseEntity<String>("Error in JSON input",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internal Server Error",
+			return new ResponseEntity<String>("Internal Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -1033,7 +1032,7 @@ public class ProvHrmController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internel Server Error",
+			return new ResponseEntity<String>("Internel Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -1059,11 +1058,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON input",
+			return new ResponseEntity<String>("Error in JSON input",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internel Server Error",
+			return new ResponseEntity<String>("Internel Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
@@ -1129,11 +1128,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON input",
+			return new ResponseEntity<String>("Error in JSON input",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internal Server Error",
+			return new ResponseEntity<String>("Internal Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -1157,7 +1156,7 @@ public class ProvHrmController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internel Server Error",
+			return new ResponseEntity<String>("Internel Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -1183,11 +1182,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON input",
+			return new ResponseEntity<String>("Error in JSON input",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internel Server Error",
+			return new ResponseEntity<String>("Internel Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
@@ -1259,12 +1258,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1289,12 +1288,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1323,12 +1322,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1397,12 +1396,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1423,16 +1422,16 @@ public class ProvHrmController {
 
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1457,16 +1456,16 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getSQLException().toString(),
+			return new ResponseEntity<String>(ce.getSQLException().toString(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1536,16 +1535,16 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1572,12 +1571,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1607,12 +1606,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1644,7 +1643,7 @@ public class ProvHrmController {
 		}
 	}
 
-	// Get a record from tblempidproof
+	/*// Get a record from tblempidproof
 	@RequestMapping(value = "/EmployeeIdProof/{employeeidproofId}", method = RequestMethod.GET)
 	public ResponseEntity<EmployeeIdproof> getIdProofById(
 			@PathVariable int employeeidproofId) {
@@ -1663,6 +1662,29 @@ public class ProvHrmController {
 			return null;
 		}
 	}
+*/
+	
+
+	//  GET A RECORD FROM EMPLOYEEEDUCATION TABLE USING employeeId
+		@RequestMapping(value = "/EmployeeIdProof/{employeeId}", method = RequestMethod.GET)
+		public ResponseEntity<List<EmployeeIdproof>> getIdProofById(
+				@PathVariable int employeeId,@RequestHeader int data) {
+			try {
+				employeeidproofdao = new EmployeeIdproofDAOImpl();
+				List<EmployeeIdproof> idproof = employeeidproofdao
+						.getIdProofById(employeeId,data);
+				if (idproof != null) {
+						return new ResponseEntity<List<EmployeeIdproof>>(
+								idproof, HttpStatus.OK);
+						} else {
+							return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+						}
+					} catch (HibernateException e) {
+						e.printStackTrace();
+						return new ResponseEntity<List<EmployeeIdproof>>(
+								HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
 
 	// Insert a record into tblempidproof
 	@RequestMapping(value = "/EmployeeIdProof", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -1682,16 +1704,16 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -1718,11 +1740,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON data",
+			return new ResponseEntity<String>("Error in JSON data",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Exceptions",
+			return new ResponseEntity<String>("Exceptions",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -1748,12 +1770,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1846,12 +1868,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1877,12 +1899,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1911,12 +1933,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -1942,17 +1964,36 @@ public class ProvHrmController {
 	}
 	
 	
-	
-	// Get empleaveeligibility by empleaveeligibilityId
-		@RequestMapping(value = "/Empleaveeligiblity/{empleaveeligibilityId}", method = RequestMethod.GET)
-		public Object getEmployeeLeaveEligibilityById(@RequestHeader int data,
-				@PathVariable int empleaveeligibilityId) {
+	/*
+	// Get empleaveeligibility by employeeId
+		@RequestMapping(value = "/Empleaveeligiblity/{employeeId}", method = RequestMethod.GET)
+		public ResponseEntity<List<EmployeeLeaveEligibility>> getEmployeeLeaveEligibilityById(
+				@PathVariable int employeeId,@RequestHeader int data) {
 			try {
 				employeeleaveeligibilitydao = new EmployeeLeaveEligibilityDAOImpl();
-				List<EmployeeLeaveEligibility> employeeleaveeligibility = (List<EmployeeLeaveEligibility>) employeeleaveeligibilitydao.getEmployeeLeaveEligibilityById(empleaveeligibilityId, data);
-				
+				List<EmployeeLeaveEligibility> employeeleaveeligibility = employeeleaveeligibilitydao
+						.getEmployeeLeaveEligibilityById(employeeId,data);
+				if (employeeleaveeligibility != null) {
+					return new ResponseEntity<List<EmployeeLeaveEligibility>>(
+							employeeleaveeligibility, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+			} catch (HibernateException e) {
+				e.printStackTrace();
+				return new ResponseEntity<List<EmployeeLeaveEligibility>>(
+						HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}*/
+	
+	// Get empleaveeligibility by empleaveeligibilityId
+		@RequestMapping(value = "/Empleaveeligiblity/{employeeId}", method = RequestMethod.GET)
+		public Object getEmployeeLeaveEligibilityById(@RequestHeader int data,
+				@PathVariable int employeeId) {
+			try {
+				employeeleaveeligibilitydao = new EmployeeLeaveEligibilityDAOImpl();
+				List<EmployeeLeaveEligibility> employeeleaveeligibility = (List<EmployeeLeaveEligibility>) employeeleaveeligibilitydao.getEmployeeLeaveEligibilityById(employeeId, data);
 				List<EmpLeaveEligileValues> ListEmpLeaveEligileValues= new ArrayList<EmpLeaveEligileValues>();
-				//JSONArray jsonarray1=new JSONArray();
 				Integer empleaveeligibility_id;
 				Integer organization_id;
 				 Integer employee_id;
@@ -2001,8 +2042,6 @@ public class ProvHrmController {
 	                leavetype = (String) array[7];
 	                totaleligible_days = (Integer) array[8];
 	                leave_description = (String) array[9];
-
-					
 					if(array[0]==null)
 					{
 						flag ="L";
@@ -2012,9 +2051,7 @@ public class ProvHrmController {
 						flag="E";
 					}
 					EmpLeaveEligileValues jsonobject1= new EmpLeaveEligileValues();
-					
-					
-					jsonobject1.setEmpleaveeligibility_id(empleaveeligibilityId);
+					jsonobject1.setEmpleaveeligibility_id(empleaveeligibility_id);
 					jsonobject1.setOrganization_id(organization_id);
 					jsonobject1.setEmployee_id(employee_id);
 					jsonobject1.setFrom_date(fd);
@@ -2026,8 +2063,7 @@ public class ProvHrmController {
 					jsonobject1.setLeave_description(leave_description);
 					jsonobject1.setFlag(flag);
 					ListEmpLeaveEligileValues.add(jsonobject1);
-					//return jsonobject1;
-			}
+		}
 		
 				
 				System.out.println(ListEmpLeaveEligileValues);
@@ -2036,16 +2072,15 @@ public class ProvHrmController {
 				
 				} else {
 					return null;
-					//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 				}
 			} catch (HibernateException e) {
 				e.printStackTrace();
 			return null;
-				/*return new ResponseEntity<List<EmployeeLeaveEligibility>>(
-						HttpStatus.INTERNAL_SERVER_ERROR);
-			*/}
-			//return empleaveeligibilityId;
+			}
 		}
+
+
+
 
 	// Insert a record into empleaveeligibility
 	@RequestMapping(value = "Empleaveeligiblity", method = RequestMethod.POST, headers = "content-type=application/json")
@@ -2071,12 +2106,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2108,12 +2143,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2140,12 +2175,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2215,12 +2250,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2247,12 +2282,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2282,12 +2317,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2357,12 +2392,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2388,12 +2423,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2423,12 +2458,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2500,12 +2535,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2533,12 +2568,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2567,12 +2602,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -2660,12 +2695,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2692,12 +2727,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2726,12 +2761,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2794,12 +2829,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2824,12 +2859,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -2859,12 +2894,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -2930,12 +2965,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2960,12 +2995,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -2994,6 +3029,116 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
+					+ " :Error in connecting to database",responseHeader,
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Something Went wrong "
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	/*
+	 * LeaveType table:tblleavetype
+	 
+	// Get a record leavetype
+	@RequestMapping(value = "/LeaveType/{leavetypeId}", method = RequestMethod.GET)
+	public ResponseEntity<LeaveType> getLeaveTypeById(
+			@PathVariable int leavetypeId) {
+		try {
+			leavetypedao = new LeaveTypeDAOImpl();
+			LeaveType leavetype = leavetypedao.getLeaveTypeById(leavetypeId);
+			if (leavetype != null) {
+				return new ResponseEntity<LeaveType>(leavetype, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<LeaveType>(HttpStatus.NO_CONTENT);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	// Get all the record in leavetype
+	@RequestMapping(value = "/LeaveType", method = RequestMethod.GET)
+	public ResponseEntity<List<LeaveType>> getAllLeaveType(
+			@RequestHeader int data) {
+		try {
+			leavetypedao = new LeaveTypeDAOImpl();
+			List<LeaveType> leavetype = leavetypedao.getAllLeaveType(data);
+			return new ResponseEntity<List<LeaveType>>(leavetype, HttpStatus.OK);
+		} catch (HibernateException he) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+
+	 * LeaveType table:tblleavetype
+	 
+	// Get a record leavetype
+	@RequestMapping(value = "/LeaveType/{leavetypeId}/{fromdate}/{todate}", method = RequestMethod.GET)
+	public ResponseEntity<LeaveType> getLeaveTypeById(
+			@PathVariable int leavetypeId) {
+		try {
+			leavetypedao = new LeaveTypeDAOImpl();
+			LeaveType leavetype = leavetypedao.getLeaveTypeById(leavetypeId);
+			if (leavetype != null) {
+				return new ResponseEntity<LeaveType>(leavetype, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<LeaveType>(HttpStatus.NO_CONTENT);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	// Get all the record in leavetype
+	@RequestMapping(value = "/LeaveType/{fromdate}/{todate}", method = RequestMethod.GET)
+	public ResponseEntity<List<LeaveType>> getAllLeaveType(
+			@RequestHeader int data, @PathVariable String fromdate,@PathVariable String todate) {
+		try {
+			leavetypedao = new LeaveTypeDAOImpl();
+			List<LeaveType> leavetype = leavetypedao.getAllLeaveType(data,fromdate,todate);
+			return new ResponseEntity<List<LeaveType>>(leavetype, HttpStatus.OK);
+		} catch (HibernateException he) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	// Insert a record into leavetype
+	@RequestMapping(value = "/LeaveType", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<String> addLeaveType(@RequestBody String addLeaveType) {
+		responseHeader.set("Content-type", "text/plain");
+		try {
+			LeaveType leavetype = (LeaveType) convertJsonToObject(addLeaveType,
+					LeaveType.class);
+			leavetypedao = new LeaveTypeDAOImpl();
+			int status = leavetypedao.addLeaveType(leavetype);
+			if (status == 0) {
+				return new ResponseEntity<String>("Error in inserting data",
+						responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				return new ResponseEntity<String>("Inserted Succesfully",
+						responseHeader, HttpStatus.OK);
+			}
+		} catch (ConstraintViolationException ce) {
+			ce.printStackTrace();
+			return new ResponseEntity<String>(ce.getConstraintName(),
+					HttpStatus.BAD_REQUEST);
+		} catch (HibernateException he) {
+			return new ResponseEntity<String>(he.getMessage()
 					+ " :Error in connecting to database",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
@@ -3004,6 +3149,72 @@ public class ProvHrmController {
 
 	}
 
+	// Delete a record in leavetype
+	@RequestMapping(value = "/LeaveType/{leavetypeId}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteLeaveType(@PathVariable int leavetypeId) {
+		responseHeader.set("Content-type", "text/plain");
+		try {
+			leavetypedao = new LeaveTypeDAOImpl();
+			int status = leavetypedao.deleteLeaveType(leavetypeId);
+			if (status == 0) {
+				return new ResponseEntity<String>("Error in deleting data",
+						responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				return new ResponseEntity<String>("Deleted Succesfully",
+						responseHeader, HttpStatus.OK);
+			}
+
+		} catch (ConstraintViolationException ce) {
+			ce.printStackTrace();
+			return new ResponseEntity<String>(ce.getConstraintName(),
+					HttpStatus.BAD_REQUEST);
+		} catch (HibernateException he) {
+			return new ResponseEntity<String>(he.getMessage()
+					+ " :Error in connecting to database",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Something Went wrong "
+					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	// Update a record in leavetype
+	@RequestMapping(value = "/LeaveType/{leavetypeId}", method = RequestMethod.PUT, headers = "content-type=application/json")
+	public ResponseEntity<String> updateLeaveType(
+			@RequestBody String updateleavetype, @PathVariable int leavetypeId)
+			throws Exception {
+		responseHeader.set("Content-type", "text/plain");
+		try {
+			LeaveType leavetype = (LeaveType) convertJsonToObject(
+					updateleavetype, LeaveType.class);
+			leavetypedao = new LeaveTypeDAOImpl();
+			leavetype.setLeavetypeId(leavetypeId);
+			int status = leavetypedao.updateLeaveType(leavetype);
+			if (status == 0) {
+				return new ResponseEntity<String>("Error in updating data",
+						responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				return new ResponseEntity<String>("Updated Succesfully",
+						responseHeader, HttpStatus.OK);
+			}
+		} catch (ConstraintViolationException ce) {
+			ce.printStackTrace();
+			return new ResponseEntity<String>(ce.getSQLException().toString(),
+					HttpStatus.BAD_REQUEST);
+		} catch (HibernateException he) {
+			return new ResponseEntity<String>(he.getMessage()
+					+ " :Error in connecting to database",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Something Went wrong "
+					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+*/
+	
 	/*
 	 * LeaveType table:tblleavetype
 	 */
@@ -3087,7 +3298,7 @@ public class ProvHrmController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			//e.printStackTrace();
-			System.out.println(e.getMessage());
+		
 			return new ResponseEntity<String>("Duplicate Entry "
 					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -3114,12 +3325,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3160,10 +3371,144 @@ public class ProvHrmController {
 		}
 
 	}
-
+	
 	/*
 	 * Login Table:tbllogin
 	 */
+
+	// Authenticate the username and password
+	@RequestMapping(value = "/Login", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<Login> Authentication(@RequestBody String checklogin) {
+		try {
+			logindao = new LoginDAOImpl();
+			Login login = (Login) convertJsonToObject(checklogin, Login.class);
+			Login loginDetails = logindao.Authentication(login);
+			System.out.println(loginDetails);
+			if (loginDetails != null) {
+				return new ResponseEntity<Login>(loginDetails, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Login>(HttpStatus.UNAUTHORIZED);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Login>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	//Forget password
+	@RequestMapping(value = "/ForgetPassword", method = RequestMethod.POST)
+	public ResponseEntity<String> forgetPassword(@RequestBody String value) 
+	{try {
+		logindao= new LoginDAOImpl();
+		int status=logindao.forgetPassword(value);
+		if(status==0)
+		{
+			return new ResponseEntity<String>("Error in sending mail "
+					, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		else
+		{
+			return new ResponseEntity<String>("Check your email for your password"
+					, HttpStatus.OK);
+		}
+	}
+	catch(Exception e)
+	{
+		return new ResponseEntity<String>("Something Went wrong "
+				+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+		
+	}
+	
+	//ChangePassword
+	@RequestMapping(value = "/ChangePassword/{loginId}", method = RequestMethod.PUT)
+	public ResponseEntity<String> changePassword(@RequestBody String value,@PathVariable int loginId) 
+	
+	{try{
+		logindao= new LoginDAOImpl();
+		
+		JsonParser parser = new JsonParser();
+		JsonObject json = parser.parse(value).getAsJsonObject();
+		int status=logindao.changePassword(loginId,json.get("userName").getAsString(),json.get("currentPassword").getAsString(),json.get("newPassword").getAsString(),json.get("updateBy").getAsInt());
+		if(status==0)
+		{
+			return new ResponseEntity<String>("Incorrect password"
+					, HttpStatus.UNAUTHORIZED);
+		}
+		else
+		{
+			return new ResponseEntity<String>("Password Changed Successfully"
+					, HttpStatus.OK);
+		}
+	}
+	catch(Exception e)
+	{
+		return new ResponseEntity<String>("Something Went wrong "
+				+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+		
+	}
+	// create new login
+	@RequestMapping(value = "/CreateLogin", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<String> insertUser(@RequestBody String value) {
+		String username = null;
+		String password = null;
+
+		Gson gson = new Gson();
+		Login login = new Login();
+		login = gson.fromJson(value, Login.class);
+		try {
+			username = new Encryption().encrypt(login.getLoginName());
+			password = new Encryption().encrypt(login.getLoginPassword());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		login.setEncryptName(username);
+		login.setEncryptPassword(password);
+		try {
+
+			logindao = new LoginDAOImpl();
+			logindao.addLogin(login);
+
+			return new ResponseEntity<String>("Inserted Successfully",
+					HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return new ResponseEntity<String>("Insertion failed",
+					HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	// Get all Login records
+
+	@RequestMapping(value = "/Login", method = RequestMethod.GET)
+	public List<Login> getAllLogin() {
+		try {
+			logindao = new LoginDAOImpl();
+			List<Login> login = logindao.getAllLogin();
+			return login;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@RequestMapping(value = "/Login/{login_id}", method = RequestMethod.GET)
+	public Login getLoginById(@PathVariable int login_id) {
+		try {
+			logindao = new LoginDAOImpl();
+			Login login = logindao.getLoginById(login_id);
+			return login;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/*
+	 * Login Table:tbllogin
+	 
 
 	// Authenticate the username and password
 	@RequestMapping(value = "/Login", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -3208,6 +3553,7 @@ public class ProvHrmController {
 	// create new login
 	@RequestMapping(value = "/CreateLogin", method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<String> insertUser(@RequestBody String value) {
+		responseHeader.set("Content-type", "text/plain");
 		String username = null;
 		String password = null;
 
@@ -3228,12 +3574,12 @@ public class ProvHrmController {
 			logindao = new LoginDAOImpl();
 			logindao.addLogin(login);
 
-			return new ResponseEntity<String>("Inserted Successfully",
+			return new ResponseEntity<String>("Inserted Successfully",responseHeader,
 					HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			return new ResponseEntity<String>("Insertion failed",
+			return new ResponseEntity<String>("Insertion failed",responseHeader,
 					HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -3316,7 +3662,7 @@ public class ProvHrmController {
 	}
 		
 	}
-
+*/
 	/*
 	 * Organization Table:tblorganization
 	 */
@@ -3382,12 +3728,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3447,12 +3793,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3512,12 +3858,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3545,12 +3891,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3576,12 +3922,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3642,12 +3988,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3676,12 +4022,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3707,12 +4053,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3772,16 +4118,16 @@ public class ProvHrmController {
 			}
 		} catch (ConstraintViolationException ce) {
 			ce.printStackTrace();
-			return new ResponseEntity<String>(ce.getConstraintName(),
+			return new ResponseEntity<String>(ce.getConstraintName(),responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3810,12 +4156,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -3915,12 +4261,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -3949,12 +4295,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(),responseHeader, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -3980,12 +4326,12 @@ public class ProvHrmController {
 					HttpStatus.BAD_REQUEST);
 		} catch (HibernateException he) {
 			return new ResponseEntity<String>(he.getMessage()
-					+ " :Error in connecting to database",
+					+ " :Error in connecting to database",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Something Went wrong "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+					+ e.getMessage(), responseHeader,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -4044,11 +4390,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON input",
+			return new ResponseEntity<String>("Error in JSON input",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internal Server Error",
+			return new ResponseEntity<String>("Internal Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -4069,7 +4415,7 @@ public class ProvHrmController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internel Server Error",
+			return new ResponseEntity<String>("Internel Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -4095,11 +4441,11 @@ public class ProvHrmController {
 			}
 		} catch (JsonSyntaxException je) {
 			// je.printStackTrace();
-			return new ResponseEntity<String>("Error in JSON input",
+			return new ResponseEntity<String>("Error in JSON input",responseHeader,
 					HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Internel Server Error",
+			return new ResponseEntity<String>("Internel Server Error",responseHeader,
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -4109,17 +4455,28 @@ public class ProvHrmController {
 		List leavecalculation= leave.LeaveCalculator(data,employeeId);
 		JSONObject jsonobject= new JSONObject();
 		JSONArray jsonarray=new JSONArray();
+		List ls=new ArrayList<>();
+		com.prov.hrm.utility.LeaveCalculation lc =null;
 		for (Object object : leavecalculation) {
+			lc =new com.prov.hrm.utility.LeaveCalculation();
 			Object array[] = (Object[]) object;
-			Integer leavetypeId = (Integer) array[0];
-			Integer eligibilitydays = (Integer) array[1];
-			Object availabledays =  array[2];
+			String leavetype = (String) array[0];
+			Integer leavetypeId = (Integer) array[1];
+			Integer eligibledays= (Integer) array[2];
+			Object availabledays =  array[3];
+			lc.setLeavetype(leavetype);
+			lc.setLeavetypeId(leavetypeId);
+			lc.setAvailabledays(availabledays);
+			lc.setEligibledays(eligibledays);
+			/*
 			jsonobject.put("leavetypeId", leavetypeId);
 			jsonobject.put("eligibilitydays", eligibilitydays);
 			jsonobject.put("availabledays",availabledays);
-			jsonarray.add(jsonobject);
+						*/
+			ls.add(lc);
+			//jsonarray.addAll(ls);
 		}
-		return jsonarray;
+		return ls;
 	}
 
 }

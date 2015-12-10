@@ -1,5 +1,8 @@
 package com.prov.hrm.employeesalary;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -17,17 +20,29 @@ public class EmployeeSalaryDAOImpl implements EmployeeSalaryDAO {
 	public List<EmployeeSalary> getAllEmployeeSalary(int organizationid)
 			throws HibernateException, ConstraintViolationException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		List<EmployeeSalary> employeesalary=new ArrayList<EmployeeSalary>();
 		try {
 			session.beginTransaction();
 			Criteria criteria = session.createCriteria(EmployeeSalary.class);
 			criteria.add(Restrictions.eq("organizationId", organizationid));
 			criteria.add(Restrictions.eq("deleteFlag", false));
-			return criteria.list();
+			employeesalary=criteria.list();
+			session.getTransaction().commit();
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			Iterator<EmployeeSalary> iterate=employeesalary.iterator();
+			while(iterate.hasNext()){
+				EmployeeSalary empsalary= (EmployeeSalary) iterate.next();
+				empsalary.setEffectiveFrom(sdfOut.format(sdinput.parse(empsalary.getEffectiveFrom())));
+				empsalary.setEffectiveTo(sdfOut.format(sdinput.parse(empsalary.getEffectiveTo())));
+				
+			}
+			return employeesalary;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		} finally {
-			session.getTransaction().commit();
+			session.close();
 		
 		}
 

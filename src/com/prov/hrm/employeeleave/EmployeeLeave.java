@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.prov.hrm.employee.Employee;
 import com.prov.hrm.leavetype.LeaveType;
-import com.prov.hrm.utility.JsonDateSerializer;
 
 public class EmployeeLeave {
 
@@ -21,10 +20,10 @@ public class EmployeeLeave {
 	private Employee approvedBy;
 	@JsonIgnore
 	private int organizationId;
-	//@JsonSerialize(using=JsonDateSerializer.class)
+
 	private String fromDate;
 	private Boolean fromHfflag;
-	//@JsonSerialize(using=JsonDateSerializer.class)
+
 	private String toDate;
 	private Boolean toHfflag;
 	private float totalDays;
@@ -158,14 +157,6 @@ public class EmployeeLeave {
 	public void setInsertBy(Integer insertBy) {
 		this.insertBy = insertBy;
 	}
-
-/*	public String getInsertDate() {
-		return insertDate;
-	}
-
-	public void setInsertDate(String insertDate) {
-		this.insertDate = insertDate;
-	}*/
 
 	public String getInsertDate() {
 		return insertDate;

@@ -20,6 +20,7 @@ public static String encrypt(String Data) throws Exception {
         c.init(Cipher.ENCRYPT_MODE, key);
         byte[] encVal = c.doFinal(Data.getBytes());
         String encryptedValue = new BASE64Encoder().encode(encVal);
+        System.out.println(encryptedValue);
         return encryptedValue;
     }
 
@@ -39,9 +40,10 @@ public static String encrypt(String Data) throws Exception {
 public static void main(String args[])
 {
 	Encryption encryption=new Encryption();
+	System.out.println(keyValue);
 	Login login=new Login();
 	String log= login.getLoginPassword();
-	
+	System.out.println(log);
 	try {
 		encrypt(log);
 	} catch (Exception e) 

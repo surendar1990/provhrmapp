@@ -4,16 +4,16 @@ import java.sql.Date;
 
 public class EmpLeaveEligileValues
 {
-	int empleaveeligibility_id =0;
-	int organization_id=0;
-    int employee_id=0;
-	String from_date=null;
-	String to_date=null;
-	int eligibilitydays=0;
-	int leavetype_id=0;
-    String leavetype=null;
-	int totaleligible_days=0;
-	String leave_description=null;
+	Integer empleaveeligibility_id;
+	Integer organization_id;
+	Integer employee_id;
+	String from_date;
+	String to_date;
+	Integer eligibilitydays;
+	Integer leavetype_id;
+    String leavetype;
+    Integer totaleligible_days;
+	String leave_description;
 	String flag;
 	public String getFlag() {
 		return flag;
@@ -21,22 +21,22 @@ public class EmpLeaveEligileValues
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
-	public int getEmpleaveeligibility_id() {
+	public Integer getEmpleaveeligibility_id() {
 		return empleaveeligibility_id;
 	}
-	public void setEmpleaveeligibility_id(int empleaveeligibility_id) {
+	public void setEmpleaveeligibility_id(Integer empleaveeligibility_id) {
 		this.empleaveeligibility_id = empleaveeligibility_id;
 	}
-	public int getOrganization_id() {
+	public Integer getOrganization_id() {
 		return organization_id;
 	}
-	public void setOrganization_id(int organization_id) {
+	public void setOrganization_id(Integer organization_id) {
 		this.organization_id = organization_id;
 	}
-	public int getEmployee_id() {
+	public Integer getEmployee_id() {
 		return employee_id;
 	}
-	public void setEmployee_id(int employee_id) {
+	public void setEmployee_id(Integer employee_id) {
 		this.employee_id = employee_id;
 	}
 	
@@ -52,16 +52,16 @@ public class EmpLeaveEligileValues
 	public void setTo_date(String to_date) {
 		this.to_date = to_date;
 	}
-	public int getEligibilitydays() {
+	public Integer getEligibilitydays() {
 		return eligibilitydays;
 	}
-	public void setEligibilitydays(int eligibilitydays) {
+	public void setEligibilitydays(Integer eligibilitydays) {
 		this.eligibilitydays = eligibilitydays;
 	}
-	public int getLeavetype_id() {
+	public Integer getLeavetype_id() {
 		return leavetype_id;
 	}
-	public void setLeavetype_id(int leavetype_id) {
+	public void setLeavetype_id(Integer leavetype_id) {
 		this.leavetype_id = leavetype_id;
 	}
 	public String getLeavetype() {
@@ -70,10 +70,10 @@ public class EmpLeaveEligileValues
 	public void setLeavetype(String leavetype) {
 		this.leavetype = leavetype;
 	}
-	public int getTotaleligible_days() {
+	public Integer getTotaleligible_days() {
 		return totaleligible_days;
 	}
-	public void setTotaleligible_days(int totaleligible_days) {
+	public void setTotaleligible_days(Integer totaleligible_days) {
 		this.totaleligible_days = totaleligible_days;
 	}
 	public String getLeave_description() {

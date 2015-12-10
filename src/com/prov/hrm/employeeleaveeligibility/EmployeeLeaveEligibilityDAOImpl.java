@@ -1,11 +1,12 @@
 package com.prov.hrm.employeeleaveeligibility;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,179 +21,108 @@ import com.prov.hrm.utility.SessionFactoryUtil;
 public class EmployeeLeaveEligibilityDAOImpl implements
 		EmployeeLeaveEligibilityDAO {
 
-	private Object crudService;
 	// GET ALL RECORD FROM tblempleaveeligibility
 	@Override
 	public List<EmployeeLeaveEligibility> getAllEmployeeLeaveEligibility(
 			int organizationId) throws HibernateException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
-		List <EmployeeLeaveEligibility>resultset=new ArrayList<EmployeeLeaveEligibility>();
+		List<EmployeeLeaveEligibility> employeeleaveeligibility=new ArrayList<EmployeeLeaveEligibility>();
+		List<EmployeeLeaveEligibility> employeeleaveeligibility1=new ArrayList<EmployeeLeaveEligibility>();
 		try {
 			session.beginTransaction();
-			Criteria leavecriteria = session.createCriteria(LeaveType.class);
-			leavecriteria.add(Restrictions.eq("organizationId", organizationId));
-			leavecriteria.add(Restrictions.eq("deleteFlag", false));
-			Criteria empeligibilitycriteria=session.createCriteria(EmployeeLeaveEligibility.class);
-			empeligibilitycriteria.add(Restrictions.eq("organizationId", organizationId));
-			empeligibilitycriteria.add(Restrictions.eq("deleteFlag", false));
-			System.out.println("1");
-			List <EmployeeLeaveEligibility>empeligibilitylist= empeligibilitycriteria.list();
-			session.flush();
-			System.out.println(empeligibilitylist);
-/*			Criteria  leavecriteria= empeligibilitycriteria.createCriteria("LeaveType");
-			leavecriteria.add(Restrictions.eq("organizationId", organizationId));
-			leavecriteria.add(Restrictions.eq("deleteFlag", false));
-*/			List <LeaveType>leavetypelist= leavecriteria.list();
-			System.out.println(leavetypelist);
-			session.flush();
-			System.out.println("2");
-			
-			LeaveType lt=null;
-			EmployeeLeaveEligibility eel=null;
-			Iterator<LeaveType> iteratorleavetype =leavetypelist.iterator();
-			Iterator<EmployeeLeaveEligibility> itreatorempeligibility =empeligibilitylist.iterator();
-			
-			while(iteratorleavetype.hasNext())
-			{
-				 lt=new LeaveType();
-				 lt=iteratorleavetype.next();
-				 eel=new EmployeeLeaveEligibility();
-				 eel=itreatorempeligibility.next();
-				 /*if(lt.getLeavetypeId().SIZE!=eel.getLeaveType().getLeavetypeId().SIZE)
-				 {
-					 
-				 }*/
-				 
-				 while(itreatorempeligibility.hasNext())
-				 {
-					 eel=new EmployeeLeaveEligibility();
-					 eel=itreatorempeligibility.next();
-					 
-					 if(lt.getLeavetypeId()!=eel.getLeaveType().getLeavetypeId())
-					 {
-						System.out.println("Inside"); 
-						 EmployeeLeaveEligibility eml=new EmployeeLeaveEligibility();
-						 eml.setDeleteFlag(false);
-						 eml.setEmployee(eel.getEmployee());
-						 eml.setOrganizationId(eel.getOrganizationId());
-						 eml.setFromDate(eel.getFromDate());
-						 eml.setToDate(eel.getToDate());
-						 int leave=lt.getLeavetypeId();
-						 LeaveType leave1=new LeaveType(leave);
-						 eml.setLeaveType(leave1);
-						 //addEmployeeLeaveEligibility(eml);
-						 resultset.add(eml);
-						
-					 }
-					 else
-					 {
-						 resultset.add(eel);
-					 }
-				 }
-				
+			Criteria criteria = session
+					.createCriteria(EmployeeLeaveEligibility.class);
+			criteria.add(Restrictions.eq("organizationId", organizationId));
+			criteria.add(Restrictions.eq("deleteFlag", false));
+			employeeleaveeligibility1=criteria.list();
+			session.getTransaction().commit();
+			Iterator<EmployeeLeaveEligibility> ite = employeeleaveeligibility1.iterator();
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			while(ite.hasNext()) {
+				EmployeeLeaveEligibility empleaveeligibility=(EmployeeLeaveEligibility)ite.next();
+				Date formDate = sdinput.parse(empleaveeligibility.getFromDate());
+				Date toDate = sdinput.parse(empleaveeligibility.getToDate());
+				empleaveeligibility.setFromDate(sdfOut.format(formDate));
+				empleaveeligibility.setToDate(sdfOut.format(toDate));
+				employeeleaveeligibility.add(empleaveeligibility);
 			}
-			return resultset;
+			return employeeleaveeligibility;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		} finally {
-			session.getTransaction().commit();
+			session.close();
 			
 		}
 	}
 
 	
-	// RETURN A RECORD FROM empleaveeligibility by empleaveeligibilityId
+	/*// RETURN A RECORD FROM empleaveeligibility by empleaveeligibilityId
 	@Override
 	public List<EmployeeLeaveEligibility> getEmployeeLeaveEligibilityById(
 			int employeeId,int organizationId) throws HibernateException,
 			ConstraintViolationException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
-		List <EmployeeLeaveEligibility>resultset=new ArrayList<EmployeeLeaveEligibility>();
 		try {
 			session.beginTransaction();
-			Criteria leavecriteria = session.createCriteria(LeaveType.class);
-			leavecriteria.add(Restrictions.eq("organizationId", organizationId));
-			leavecriteria.add(Restrictions.eq("deleteFlag", false));
-			System.out.println(employeeId);
-			EmployeeLeaveEligibility empeligibilitycriteria=(EmployeeLeaveEligibility) session.get(EmployeeLeaveEligibility.class,employeeId);
-			//empeligibilitycriteria.add(Restrictions.eq("organizationId", organizationId));
-			//empeligibilitycriteria.add(Restrictions.eq("deleteFlag", false));
-			System.out.println("1");
-			System.out.println(empeligibilitycriteria);
-			Query query=session.createSQLQuery("select e.empleaveeligibility_id,d.organization_id,e.employee_id,e.from_date,e.to_date,e.eligibilitydays,d.leavetype_id,d.leavetype,d.eligible_days,d.leave_description from (select * from tblempleaveeligibility as a where a.employee_id=4 and a.organization_id=3) e RIGHT JOIN  tblleavetype d on e.leavetype_id=d.leavetype_id where d.organization_id='"+organizationId+"'");
-             
+			Criteria criteria = session.createCriteria(EmployeeLeaveEligibility.class);
+			criteria.add(Restrictions.eq("employee", new Employee(employeeId)));
+			criteria.add(Restrictions.eq("organizationId", organizationId));
+			criteria.add(Restrictions.eq("deleteFlag", false));
+			return (List<EmployeeLeaveEligibility>) criteria.list();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			} finally {
+				session.getTransaction().commit();
+				
+			}
+		}*/
+	
+	// RETURN A RECORD FROM empleaveeligibility by empleaveeligibilityId
+		@Override
+		public List<EmployeeLeaveEligibility> getEmployeeLeaveEligibilityById(
+				int employeeId,int organizationId) throws HibernateException,
+				ConstraintViolationException {
+			Session session = SessionFactoryUtil.getSessionFactory().openSession();
+			List<EmployeeLeaveEligibility> employeeleaveeligibility=new ArrayList<EmployeeLeaveEligibility>();
+			List<EmployeeLeaveEligibility> employeeleaveeligibility1=new ArrayList<EmployeeLeaveEligibility>();
 			
-					
-			
-			//List <EmployeeLeaveEligibility> empeligibilitylist= (List<EmployeeLeaveEligibility>) empeligibilitycriteria;
-			session.flush();
-			System.out.println(empeligibilitycriteria);
-/*			Criteria  leavecriteria= empeligibilitycriteria.createCriteria("LeaveType");
-			leavecriteria.add(Restrictions.eq("organizationId", organizationId));
-			leavecriteria.add(Restrictions.eq("deleteFlag", false));
-*/			List <LeaveType>leavetypelist= leavecriteria.list();
-			System.out.println(leavetypelist);
-			session.flush();
-			System.out.println("2");
-			
-//			LeaveType lt=null;
-//			EmployeeLeaveEligibility eel=null;
-//			Iterator<LeaveType> iteratorleavetype =leavetypelist.iterator();
-//			//Iterator<EmployeeLeaveEligibility> itreatorempeligibility =empeligibilitylist.iterator();
-//			
-//			while(iteratorleavetype.hasNext())
-//			{
-//				 lt=new LeaveType();
-//				 lt=iteratorleavetype.next();
-//				 eel=new EmployeeLeaveEligibility();
-//				// eel=itreatorempeligibility.next();
-//				 /*if(lt.getLeavetypeId().SIZE!=eel.getLeaveType().getLeavetypeId().SIZE)
-//				 {
-//					 
-//				 }*/
-//				 
-//				 while(itreatorempeligibility.hasNext())
-//				 {
-//					 eel=new EmployeeLeaveEligibility();
-//					 eel=itreatorempeligibility.next();
-//					 
-//					 if(lt.getLeavetypeId()!=eel.getLeaveType().getLeavetypeId())
-//					 {
-//						System.out.println("Inside"); 
-//						 EmployeeLeaveEligibility eml=new EmployeeLeaveEligibility();
-//						 eml.setDeleteFlag(false);
-//						 eml.setEmployee(eel.getEmployee());
-//						 eml.setOrganizationId(eel.getOrganizationId());
-//						 eml.setFromDate(eel.getFromDate());
-//						 eml.setToDate(eel.getToDate());
-//						 int leave=lt.getLeavetypeId();
-//						 LeaveType leave1=new LeaveType(leave);
-//						 eml.setLeaveType(leave1);
-//						// addEmployeeLeaveEligibility(eml);
-//						 resultset.add(eml);
-//						
-//					 }
-//					 else
-//					 {
-//						 resultset.add(eel);
-//					 }
-//				 }
-//				
-//			}
-			
-			
-			
-			return query.list();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		} finally {
-			session.getTransaction().commit();
-			
+			try {
+				session.beginTransaction();
+				Criteria leavecriteria = session.createCriteria(LeaveType.class);
+				leavecriteria.add(Restrictions.eq("organizationId", organizationId));
+				leavecriteria.add(Restrictions.eq("deleteFlag", false));
+				EmployeeLeaveEligibility empeligibilitycriteria=(EmployeeLeaveEligibility) session.get(EmployeeLeaveEligibility.class,employeeId);
+				Query query=session.createSQLQuery("select e.empleaveeligibility_id,d.organization_id,e.employee_id,e.from_date,e.to_date,e.eligibilitydays,d.leavetype_id,d.leavetype,d.eligible_days,d.leave_description from"
+						+ " (select * from tblempleaveeligibility as a where a.employee_id='"+employeeId+"' and a.organization_id='"+organizationId+"' and a.delete_flag=0) e RIGHT JOIN "
+						+ " tblleavetype d on e.leavetype_id=d.leavetype_id where d.organization_id='"+organizationId+"' and d.delete_flag=0");
+	            session.flush();
+				List <LeaveType>leavetypelist= leavecriteria.list();
+				session.flush();
+				employeeleaveeligibility=query.list();
+				session.getTransaction().commit();
+				Iterator<EmployeeLeaveEligibility> ite = employeeleaveeligibility1.iterator();
+				 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+				 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+				while(ite.hasNext()) {
+					EmployeeLeaveEligibility empleaveeligibility=(EmployeeLeaveEligibility)ite.next();
+					Date formDate = sdinput.parse(empleaveeligibility.getFromDate());
+					Date toDate = sdinput.parse(empleaveeligibility.getToDate());
+					empleaveeligibility.setFromDate(sdfOut.format(formDate));
+					empleaveeligibility.setToDate(sdfOut.format(toDate));
+					employeeleaveeligibility.add(empleaveeligibility);
+				}
+				return employeeleaveeligibility;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			} finally {
+				session.close();
+				
+			}
 		}
-	}
-
 	// RETURN A RECORD FROM empleaveeligibility by empleaveeligibilityId
 	
 	public EmployeeLeaveEligibility getEmployeeLeaveById(
@@ -217,6 +147,7 @@ public class EmployeeLeaveEligibilityDAOImpl implements
 			return null;
 		} finally {
 			session.getTransaction().commit();
+			session.close();
 			
 		}
 	}
@@ -231,8 +162,14 @@ public class EmployeeLeaveEligibilityDAOImpl implements
 			session.beginTransaction();
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
+			SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
 			employeeleaveeligibility.setInsertDate(date.toString());
 			employeeleaveeligibility.setUpdateDate(date.toString());
+			Date formDate = indate.parse(employeeleaveeligibility.getFromDate());
+			Date toDate = indate.parse(employeeleaveeligibility.getToDate());
+			employeeleaveeligibility.setFromDate(outdate.format(formDate));
+			employeeleaveeligibility.setToDate(outdate.format(toDate));
 			session.save(employeeleaveeligibility);
 			status=1;
 			return status;
@@ -241,6 +178,7 @@ public class EmployeeLeaveEligibilityDAOImpl implements
 			return status;
 		} finally {
 			session.getTransaction().commit();
+			session.close();
 			
 		}
 	}
@@ -255,11 +193,17 @@ public class EmployeeLeaveEligibilityDAOImpl implements
 			session.beginTransaction();
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
+			SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
 			employeeleaveeligibility.setUpdateDate(date.toString());
 			EmployeeLeaveEligibility empleaveeligibility = getEmployeeLeaveById(employeeleaveeligibility.getEmpleaveeligibilityId());
 			if (empleaveeligibility != null) {
 				employeeleaveeligibility.setInsertBy(empleaveeligibility.getInsertBy());
 				employeeleaveeligibility.setInsertDate(empleaveeligibility.getInsertDate());
+				Date formDate = indate.parse(employeeleaveeligibility.getFromDate());
+				Date toDate = indate.parse(employeeleaveeligibility.getToDate());
+				employeeleaveeligibility.setFromDate(outdate.format(formDate));
+				employeeleaveeligibility.setToDate(outdate.format(toDate));
 				session.update(employeeleaveeligibility);
 			} else {
 				return status;
@@ -271,6 +215,7 @@ public class EmployeeLeaveEligibilityDAOImpl implements
 			return status;
 		} finally {
 			session.getTransaction().commit();
+			session.close();
 			
 		}
 	}
@@ -315,7 +260,7 @@ public class EmployeeLeaveEligibilityDAOImpl implements
 				e.printStackTrace();
 				return status;
 			} finally {
-				session.getTransaction().commit();
+				session.close();
 				
 			}
 		}

@@ -32,13 +32,6 @@ public class EmployeeLeaveEligibility {
 
 	public EmployeeLeaveEligibility() {
 	}
-	
-
-	public EmployeeLeaveEligibility(Integer empleaveeligibilityId) {
-		super();
-		this.empleaveeligibilityId = empleaveeligibilityId;
-	}
-
 
 	public Integer getEmpleaveeligibilityId() {
 		return empleaveeligibilityId;

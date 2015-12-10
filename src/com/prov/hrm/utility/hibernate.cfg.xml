@@ -5,10 +5,10 @@
 	<session-factory>
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<!-- <property name="connection.url">jdbc:mysql://192.168.1.64:3306/provhrmapp</property> -->
-		<property name="connection.url">jdbc:mysql://localhost:3306/provhrmapp</property> 
-		<property name="connection.username">root</property>
-		<property name="connection.password"></property>
+		<property name="connection.url">jdbc:mysql://192.168.1.64:3306/provhrmapp</property>
+		<!-- <property name="connection.url">jdbc:mysql://localhost:3306/provhrmapp</property>  -->
+		<property name="connection.username">user</property>
+		<property name="connection.password">user</property>
 		<!-- <property name="hbm2ddl.auto">update</property> -->
 		<property name="show_sql">true</property>
 		
@@ -40,6 +40,7 @@
 		<mapping resource="com/prov/hrm/stateprovince/StateProvince.hbm.xml" />
 		<mapping resource="com/prov/hrm/visatype/VisaType.hbm.xml" />
   		<mapping resource="com/prov/hrm/screenauths/ScreenAuth.hbm.xml" />
+  		<mapping resource="com/prov/hrm/Mail/LeaveRequestMail.hbm.xml" />
   		
   
 	

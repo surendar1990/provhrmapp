@@ -23,10 +23,10 @@
         <property name="empType" type="string">
             <column name="emp_type" length="15" not-null="true" />
         </property>
-        <property name="empNo" type="string" update="false">
+        <property name="empNo" type="string">
             <column name="emp_no" length="15" not-null="true" />
         </property>
-        <property name="dateOfJoining" type="string" update="false">
+        <property name="dateOfJoining" type="string" >
             <column name="date_of_joining" length="0" not-null="true" />
         </property>
         <property name="firstName" type="string" >
@@ -44,10 +44,10 @@
         <property name="emailId" type="string">
             <column name="email_id" length="50" not-null="true" />
         </property>
-        <property name="panNumber" type="string" update="false">
+        <property name="panNumber" type="string" >
             <column name="pan_number" length="10" />
         </property>
-        <property name="passportNumber" type="string" update="false">
+        <property name="passportNumber" type="string" >
             <column name="passport_number" length="10" />
         </property>
         <property name="passportValidity" type="string">

@@ -1,7 +1,5 @@
 package com.prov.hrm.login;
 
-
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -14,30 +12,34 @@ import com.prov.hrm.employee.Employee;
 import com.prov.hrm.utility.Mail;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
-public class LoginDAOImpl implements LoginDAO
-{
-
+public class LoginDAOImpl implements LoginDAO {
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Login> Authentication(Login login) {
-	
-		Session session=SessionFactoryUtil.getSessionFactory().openSession();
-		try{
-		session.beginTransaction();
-		String password=login.getEncryptPassword();
-		String username=login.getEncryptName();
-		System.out.println(username);
-		Query query=session.createSQLQuery("select login_id,organization_id,employee_id,login_name from tbllogin where encrypt_name='"+username+"' and encrypt_password='"+password+"'");
-		return query.list();
-		}catch(Exception e){
+	public Login Authentication(Login login) {
+		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			Login check =(Login)session.createCriteria(Login.class)
+					.add(Restrictions.eq("loginName", login.getLoginName()))
+						.add(Restrictions.eq("loginPassword", login.getLoginPassword())).uniqueResult();
+			if((check!=null)&&(check.getLoginPassword().equals(login.getLoginPassword()))&&(check.getLoginName().equals(login.getLoginName())))
+			{
+				return check;
+			}
+			else
+			{
+				return null;
+			}
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}finally{
-		session.getTransaction().commit();
-		}			
-		
+		} finally {
+			session.getTransaction().commit();
+		}
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Login> getAllLogin() {
@@ -52,27 +54,27 @@ public class LoginDAOImpl implements LoginDAO
 			return null;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
 
 	@Override
 	public int addLogin(Login login) {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
-		int status=0;
+		int status = 0;
 		try {
 			session.beginTransaction();
-			status= (int) session.save(login);
+			status = (int) session.save(login);
 			return status;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
-	
+
 	@Override
 	public Login getLoginById(int login_id) {
 
@@ -86,12 +88,38 @@ public class LoginDAOImpl implements LoginDAO
 			return null;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
+
+	@Override
+	public int forgetPassword(String email) {
+		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		int status = 0;
+		try {
+			
+			session.beginTransaction();
+			Login login = (Login) session.createCriteria(Login.class)
+					.add(Restrictions.eq("loginName", email))
+					.add(Restrictions.eq("deleteFlag", false)).uniqueResult();
+			session.flush();
+			Employee employee = (Employee) session.get(Employee.class,
+					login.getEmployee().getEmployeeId());
+			Mail.sendMailForForgetPassword(login.getLoginName(),
+					employee.getFirstName(), login.getLoginPassword());
+			status = 1;
+			return status;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 	
+		}
+		finally{
+			session.getTransaction().commit();		
+		}
+
+	}
 	
-	//Change Password
 	public int changePassword(int loginId,String userName,String currentPassword,String newPassword,int updateBy)
 	{
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
@@ -130,37 +158,5 @@ public class LoginDAOImpl implements LoginDAO
 			session.getTransaction().commit();		
 		}
 	}
-	
-	//Forget password
-	public int forgetPassword(String email) {
-		Session session = SessionFactoryUtil.getSessionFactory().openSession();
-		int status = 0;
-		try {
-			
-			session.beginTransaction();
-			Login login = (Login) session.createCriteria(Login.class)
-					.add(Restrictions.eq("loginName", email))
-					.add(Restrictions.eq("deleteFlag", false)).uniqueResult();
-			session.flush();
-			Employee employee = (Employee) session.get(Employee.class,
-					login.getEmployee().getEmployeeId());
-			Mail.sendMailForForgetPassword(login.getLoginName(),
-					employee.getFirstName(), login.getLoginPassword());
-			status = 1;
-			return status;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 0;
-	
-		}
-		finally{
-			session.getTransaction().commit();		
-		}
 
-	}
-
-
-    }
- 
-
-
+}

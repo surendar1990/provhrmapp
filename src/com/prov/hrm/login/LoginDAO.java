@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LoginDAO 
 {
-	public List<Login> Authentication(Login login);
+	public Login Authentication(Login login_name);
 	public List<Login> getAllLogin();
 
 	public int addLogin(Login login);
@@ -16,6 +16,8 @@ public interface LoginDAO
 	public int deleteLogin(int login_id);*/
 
 	public Login getLoginById(int login_id);
+	
+	public int forgetPassword(String email);
 
 
 }

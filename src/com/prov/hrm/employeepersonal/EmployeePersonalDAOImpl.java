@@ -1,5 +1,9 @@
 package com.prov.hrm.employeepersonal;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -9,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
 import com.prov.hrm.employee.Employee;
+import com.prov.hrm.employeeleave.EmployeeLeave;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
 public class EmployeePersonalDAOImpl implements EmployeePersonalDAO
@@ -19,17 +24,31 @@ public class EmployeePersonalDAOImpl implements EmployeePersonalDAO
 	@Override
 	public List<EmployeePersonal> getAllEmpPersonal(int organizationId)throws HibernateException,ConstraintViolationException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		List<EmployeePersonal> emppersonal=new ArrayList<EmployeePersonal>();
+		List<EmployeePersonal> emppersonal1=new ArrayList<EmployeePersonal>();
 		try{
 			session.beginTransaction();
 			Criteria criteria=session.createCriteria(EmployeePersonal.class);
 			criteria.add(Restrictions.eq("organizationId", organizationId));
 			criteria.add(Restrictions.eq("deleteFlag", false));
-			return criteria.list();
+			emppersonal1= criteria.list();
+			session.getTransaction().commit();
+			Iterator<EmployeePersonal> ite = emppersonal1.iterator();
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			while(ite.hasNext()) {
+				EmployeePersonal employeepersonal=(EmployeePersonal)ite.next();
+				Date DOB = sdinput.parse(employeepersonal.getDateOfBirth());
+				employeepersonal.setDateOfBirth(sdfOut.format(DOB));
+				emppersonal.add(employeepersonal);
+			}
+			return emppersonal;
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}finally{
-			session.getTransaction().commit();
+			session.close();
 			
 		}
 		
@@ -40,18 +59,33 @@ public class EmployeePersonalDAOImpl implements EmployeePersonalDAO
 	public List<EmployeePersonal> getEmpPersonal(int employeeId,int organizationId) throws HibernateException,ConstraintViolationException
 	{
 		Session session=SessionFactoryUtil.getSessionFactory().openSession();
+		List<EmployeePersonal> emppersonal=new ArrayList<EmployeePersonal>();
+		List<EmployeePersonal> emppersonal1=new ArrayList<EmployeePersonal>();
+		
 		try{
 			session.beginTransaction();
 			Criteria criteria = session.createCriteria(EmployeePersonal.class);
 			criteria.add(Restrictions.eq("employee", new Employee(employeeId)));
 			criteria.add(Restrictions.eq("organizationId", organizationId));
 			criteria.add(Restrictions.eq("deleteFlag", false));
-			return (List<EmployeePersonal>) criteria.list();
+			emppersonal= criteria.list();
+			session.getTransaction().commit();
+			Iterator<EmployeePersonal> ite = emppersonal.iterator();
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			while(ite.hasNext()) {
+				EmployeePersonal employeepersonal=(EmployeePersonal)ite.next();
+				Date DOB = sdinput.parse(employeepersonal.getDateOfBirth());
+				employeepersonal.setDateOfBirth(sdfOut.format(DOB));
+				emppersonal1.add(employeepersonal);
+			}
+			return emppersonal1;
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
 			} finally {
-				session.getTransaction().commit();
+			session.close();
 				
 			}
 		}
@@ -90,8 +124,12 @@ public class EmployeePersonalDAOImpl implements EmployeePersonalDAO
 		try{
 			session.beginTransaction();
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
 			employeepersonal.setInsertDate(date.toString());
 			employeepersonal.setUpdateDate(date.toString());
+			Date fromDate = indate.parse(employeepersonal.getDateOfBirth());
+			employeepersonal.setDateOfBirth(outdate.format(fromDate));
 			session.save(employeepersonal);
 			status=1;
 			return status;
@@ -100,6 +138,7 @@ public class EmployeePersonalDAOImpl implements EmployeePersonalDAO
 			return 0;
 		}finally{
 			session.getTransaction().commit();
+			session.close();
 			
 		}
 	}
@@ -112,11 +151,15 @@ public class EmployeePersonalDAOImpl implements EmployeePersonalDAO
 		try{
 			session.beginTransaction();
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
 			employeepersonal.setUpdateDate(date.toString());
 			EmployeePersonal emppersonal = getEmployeePersonal(employeepersonal.getEmppersonalId());
 			if (emppersonal != null) {
 				employeepersonal.setInsertBy(emppersonal.getInsertBy());
 				employeepersonal.setInsertDate(emppersonal.getInsertDate());
+				Date fromDate = indate.parse(employeepersonal.getDateOfBirth());
+				employeepersonal.setDateOfBirth(outdate.format(fromDate));
 				session.update(employeepersonal);
 			} else {
 				return status;
@@ -128,7 +171,7 @@ public class EmployeePersonalDAOImpl implements EmployeePersonalDAO
 			return status;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
 

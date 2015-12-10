@@ -14,10 +14,10 @@
         <property name="attendancelogFile" type="binary">
             <column name="attendancelog_file" not-null="true" />
         </property>
-        <property name="month" type="int" update="false">
+        <property name="month" type="int" >
             <column name="month" not-null="true" />
         </property>
-        <property name="year" type="date" update="false">
+        <property name="year" type="date" >
             <column name="year" length="0" not-null="true" />
         </property>
         <property name="uploadTimeStamp" type="string" >

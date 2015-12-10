@@ -2,6 +2,8 @@ package com.prov.hrm.employeeidproof;
 
 import java.util.List;
 
+
+
 public interface EmployeeIdproofDAO 
 {
 	public List<EmployeeIdproof> getAllIdProof(int organizationid);
@@ -12,5 +14,6 @@ public interface EmployeeIdproofDAO
 
 	public int deleteIdProof(int idproofId);
 
-	public EmployeeIdproof getIdProofById(int idproofId);
+	
+	public List<EmployeeIdproof> getIdProofById(int emppersonalId,int organizationId);
 }

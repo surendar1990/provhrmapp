@@ -1,5 +1,9 @@
 package com.prov.hrm.holiday;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
+import com.prov.hrm.employeeleave.EmployeeLeave;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
 public class HolidayDAOImpl implements HolidayDAO {
@@ -18,16 +23,30 @@ public class HolidayDAOImpl implements HolidayDAO {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
+			List< Holiday> holiday=new ArrayList<Holiday>();
+			List<Holiday> holiday1=new ArrayList<Holiday>();
+			
 			Criteria criteria = session.createCriteria(Holiday.class);
 			criteria.add(Restrictions.eq("organizationId", organizationid));
 			criteria.add(Restrictions.eq("deleteFlag", false));
-			return criteria.list();
+			holiday=criteria.list();
+			session.getTransaction().commit();
+			Iterator<Holiday> iterator = holiday.iterator();
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			while(iterator.hasNext()) {
+				Holiday holidays=(Holiday)iterator.next();
+				Date Date = sdinput.parse(holidays.getHolidayDate());
+				holidays.setHolidayDate(sdfOut.format(Date));
+				holiday1.add(holidays);
+			}
+			return holiday;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			session.getTransaction().commit();
-
+		} finally{
+			session.close();
 		}
 
 	}
@@ -39,9 +58,16 @@ public class HolidayDAOImpl implements HolidayDAO {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
+			SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			
 			Holiday holiday = (Holiday) session.get(Holiday.class, holidayId);
+			session.getTransaction().commit();
 			if (holiday != null) {
 				if (!holiday.getDeleteFlag()) {
+					Date Date = sdinput.parse(holiday.getHolidayDate());
+					holiday.setHolidayDate(sdfOut.format(Date));
+						
 					return holiday;
 				} else {
 					return null;
@@ -52,9 +78,8 @@ public class HolidayDAOImpl implements HolidayDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			session.getTransaction().commit();
-
+		} finally{
+			session.close();
 		}
 	}
 
@@ -65,8 +90,12 @@ public class HolidayDAOImpl implements HolidayDAO {
 		int status = 0;
 		try {
 			session.beginTransaction();
+			SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
+			Date fromDate = indate.parse(holiday.getHolidayDate());
+			holiday.setHolidayDate(outdate.format(fromDate));
 			holiday.setInsertDate(date.toString());
 			holiday.setUpdateDate(date.toString());
 			session.save(holiday);
@@ -77,6 +106,7 @@ public class HolidayDAOImpl implements HolidayDAO {
 			return 0;
 		} finally {
 			session.getTransaction().commit();
+			session.close();
 
 		}
 	}
@@ -91,8 +121,12 @@ public class HolidayDAOImpl implements HolidayDAO {
 
 			Holiday holiday1 = getHolidayById(holiday.getHolidayId());
 			if (holiday1 != null) {
+				SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
 				java.sql.Timestamp date = new java.sql.Timestamp(
 						new java.util.Date().getTime());
+				Date fromDate = indate.parse(holiday.getHolidayDate());
+				holiday.setHolidayDate(outdate.format(fromDate));
 				holiday.setUpdateDate(date.toString());
 				holiday.setInsertBy(holiday1.getInsertBy());
 				holiday.setInsertDate(holiday1.getInsertDate());
@@ -107,6 +141,7 @@ public class HolidayDAOImpl implements HolidayDAO {
 			return status;
 		} finally {
 			session.getTransaction().commit();
+			session.clear();
 		}
 	}
 
@@ -133,6 +168,7 @@ public class HolidayDAOImpl implements HolidayDAO {
 			return status;
 		} finally {
 			session.getTransaction().commit();
+			session.close();
 
 		}
 	}

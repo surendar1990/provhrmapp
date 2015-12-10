@@ -1,5 +1,9 @@
 package com.prov.hrm.employeeidproof;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,6 +12,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
+import com.prov.hrm.employee.Employee;
+import com.prov.hrm.employeebank.EmployeeBank;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
 public class EmployeeIdproofDAOImpl implements EmployeeIdproofDAO {
@@ -18,18 +24,35 @@ public class EmployeeIdproofDAOImpl implements EmployeeIdproofDAO {
 	public List<EmployeeIdproof> getAllIdProof(int organizationid)
 			throws HibernateException,ConstraintViolationException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		List<EmployeeIdproof> empidproof=new ArrayList<EmployeeIdproof>();
+		List<EmployeeIdproof> empidproof1=new ArrayList<EmployeeIdproof>();
 		try {
 			session.beginTransaction();
 			Criteria criteria = session.createCriteria(EmployeeIdproof.class);
 			criteria.add(Restrictions.eq("organizationId", organizationid));
 			criteria.add(Restrictions.eq("deleteFlag", false));
-			return criteria.list();
+			empidproof1= criteria.list();
+			session.getTransaction().commit();
+			Iterator<EmployeeIdproof> ite = empidproof1.iterator();
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			while(ite.hasNext()) {
+				EmployeeIdproof empid=(EmployeeIdproof)ite.next();
+				if(empid.getValidUpto()!=null){
+				Date DOJ = sdinput.parse(empid.getValidUpto());
+				empid.setValidUpto(sdfOut.format(DOJ));
+				empidproof.add(empid);
+				}else{ 
+					empid.setValidUpto(null);
+					}
+			}
+			return empidproof;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		} finally {
-			session.getTransaction().commit();
 			
+			session.close();
 		}
 	}
 
@@ -42,8 +65,18 @@ public class EmployeeIdproofDAOImpl implements EmployeeIdproofDAO {
 			session.beginTransaction();
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
-			idproof.setInsertDate(date.toString());
+			 
+			SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
+			
+			 idproof.setInsertDate(date.toString());
 			idproof.setUpdateDate(date.toString());
+			if(idproof.getValidUpto()!=null){
+				Date validdate = indate.parse(idproof.getValidUpto());	
+				idproof.setValidUpto(outdate.format(validdate));
+			}else{
+				idproof.setValidUpto(null);
+			}	
 			session.save(idproof);
 			status = 1;
 			return status;
@@ -52,7 +85,7 @@ public class EmployeeIdproofDAOImpl implements EmployeeIdproofDAO {
 			return 0;
 		} finally {
 			session.getTransaction().commit();
-		
+			session.close();
 		}
 	}
 
@@ -63,13 +96,21 @@ public class EmployeeIdproofDAOImpl implements EmployeeIdproofDAO {
 		int status = 0;
 		try {
 			session.beginTransaction();
+			SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
 			idproof.setUpdateDate(date.toString());
 			EmployeeIdproofDAOImpl idproofdaoimpl = new EmployeeIdproofDAOImpl();
-			EmployeeIdproof idp = idproofdaoimpl.getIdProofById(idproof
+			EmployeeIdproof idp = idproofdaoimpl.getIdProofId(idproof
 					.getEmpidproofId());
 			idproof.setInsertDate(idp.getInsertDate());
+			if(idproof.getValidUpto()!=null){
+				Date validdate = indate.parse(idproof.getValidUpto());	
+				idproof.setValidUpto(outdate.format(validdate));
+			}else{
+				idproof.setValidUpto(null);
+			}
 			session.update(idproof);
 			status = 1;
 			return status;
@@ -88,7 +129,7 @@ public class EmployeeIdproofDAOImpl implements EmployeeIdproofDAO {
 	{
 		int status = 0;
 		try {
-			EmployeeIdproof idproof = getIdProofById(idproofId);
+			EmployeeIdproof idproof = getIdProofId(idproofId);
 			if (idproof != null) {
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
@@ -130,17 +171,65 @@ public class EmployeeIdproofDAOImpl implements EmployeeIdproofDAO {
 		}
 	}
 
+	//GET A SINGLE RECORD by employeeId
+			@Override
+			public List<EmployeeIdproof> getIdProofById(int employeeId,int organizationId) throws HibernateException,ConstraintViolationException
+			{
+				Session session=SessionFactoryUtil.getSessionFactory().openSession();
+				try{
+					session.beginTransaction();
+					List<EmployeeIdproof> empidproof=new ArrayList<EmployeeIdproof>();
+					List<EmployeeIdproof> empidproof1=new ArrayList<EmployeeIdproof>();
+					 Criteria criteria = session.createCriteria(EmployeeIdproof.class);
+					criteria.add(Restrictions.eq("employee", new Employee(employeeId)));
+					criteria.add(Restrictions.eq("organizationId", organizationId));
+					criteria.add(Restrictions.eq("deleteFlag", false));
+					empidproof=criteria.list();
+					Iterator<EmployeeIdproof> ite = empidproof.iterator();
+					 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+					 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+					while(ite.hasNext()) {
+						EmployeeIdproof empid=(EmployeeIdproof)ite.next();
+						if(empid.getValidUpto()!=null){
+						Date DOJ = sdinput.parse(empid.getValidUpto());
+						empid.setValidUpto(sdfOut.format(DOJ));
+						empidproof1.add(empid);
+						}else{ 
+							empid.setValidUpto(null);
+							empidproof1.add(empid);
+						}
+					}
+					return empidproof1;
+					
+				}catch (Exception e) {
+						e.printStackTrace();
+						return null;
+					} finally {
+						
+						session.close();
+					}
+			
+				
+				}
+			
+	
 	// Return a record from tblempidproof for specific Empidproof_id
-	@Override
-	public EmployeeIdproof getIdProofById(int idproofId)throws HibernateException,ConstraintViolationException {
+
+	public EmployeeIdproof getIdProofId(int idproofId)throws HibernateException,ConstraintViolationException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
 			EmployeeIdproof idproof = (EmployeeIdproof) session.get(
 					EmployeeIdproof.class, idproofId);
+			if(idproof!=null){
 			if (!idproof.isDeleteFlag()) {
 				return idproof;
 			} else {
+				return null;
+			}
+			}
+			else
+			{
 				return null;
 			}
 		} catch (Exception e) {

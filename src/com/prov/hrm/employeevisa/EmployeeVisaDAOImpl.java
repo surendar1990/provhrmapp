@@ -1,5 +1,9 @@
 package com.prov.hrm.employeevisa;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -20,15 +24,30 @@ public class EmployeeVisaDAOImpl implements EmployeeVisaDAO {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
+			List<EmployeeVisa> employeevisa=new ArrayList<EmployeeVisa>();
+			List<EmployeeVisa> employeevisa1=new ArrayList<EmployeeVisa>();
+			
 			Criteria criteria = session.createCriteria(EmployeeVisa.class);
 			criteria.add(Restrictions.eq("organizationId", organizationid));
 			criteria.add(Restrictions.eq("deleteFlag", false));
-			return criteria.list();
+			employeevisa1=criteria.list();
+			session.getTransaction().commit();
+			Iterator<EmployeeVisa> ite = employeevisa1.iterator();
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			while(ite.hasNext()) {
+				EmployeeVisa employee=(EmployeeVisa)ite.next();
+				Date passport = sdinput.parse(employee.getVisaValidity());	
+				employee.setVisaValidity(sdfOut.format(passport));
+				employeevisa.add(employee);
+			}
+			
+			return employeevisa;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		} finally {
-			session.getTransaction().commit();
+			session.close();
 			
 		}
 
@@ -49,7 +68,7 @@ public class EmployeeVisaDAOImpl implements EmployeeVisaDAO {
 			return null;
 		} finally {
 			session.getTransaction().commit();
-		
+			session.close();
 		}
 	}
 
@@ -63,8 +82,13 @@ public class EmployeeVisaDAOImpl implements EmployeeVisaDAO {
 			session.beginTransaction();
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
-			employeevisa.setUpdateDate(date.toString());
-			employeevisa.setInsertDate(date.toString());
+			 SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
+						
+			 employeevisa.setUpdateDate(date.toString());
+			 employeevisa.setInsertDate(date.toString());
+			 Date toDate = indate.parse(employeevisa.getVisaValidity());
+			 employeevisa.setVisaValidity(outdate.format(toDate));
 			session.save(employeevisa);
 			status = 1;
 			return status;
@@ -73,7 +97,7 @@ public class EmployeeVisaDAOImpl implements EmployeeVisaDAO {
 			return 0;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
 
@@ -87,7 +111,14 @@ public class EmployeeVisaDAOImpl implements EmployeeVisaDAO {
 			session.beginTransaction();
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
+			 SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat indate = new SimpleDateFormat("dd-MM-yyyy");
+			 
 			employeevisa.setUpdateDate(date.toString());
+			
+			Date toDate = indate.parse(employeevisa.getVisaValidity());
+			 employeevisa.setVisaValidity(outdate.format(toDate));
+			
 			session.update(employeevisa);
 			status = 1;
 			return status;
@@ -96,7 +127,7 @@ public class EmployeeVisaDAOImpl implements EmployeeVisaDAO {
 			return status;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
 
@@ -143,16 +174,30 @@ public class EmployeeVisaDAOImpl implements EmployeeVisaDAO {
 			Session session = SessionFactoryUtil.getSessionFactory().openSession();
 			try {
 				session.beginTransaction();
+				List<EmployeeVisa> employeevisa=new ArrayList<EmployeeVisa>();
+				List<EmployeeVisa> employeevisa1=new ArrayList<EmployeeVisa>();
 				Criteria criteria = session.createCriteria(EmployeeVisa.class);
 				criteria.add(Restrictions.eq("employee", new Employee(employeeId)));
 				criteria.add(Restrictions.eq("organizationId", organizationId));
 				criteria.add(Restrictions.eq("deleteFlag", false));
-				return criteria.list();
+				employeevisa1=criteria.list();
+				session.getTransaction().commit();
+				Iterator<EmployeeVisa> ite = employeevisa1.iterator();
+				 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+				 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+				while(ite.hasNext()) {
+					EmployeeVisa employee=(EmployeeVisa)ite.next();
+					Date passport = sdinput.parse(employee.getVisaValidity());	
+					employee.setVisaValidity(sdfOut.format(passport));
+					employeevisa.add(employee);
+				}
+				
+				return employeevisa;
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
 			} finally {
-				session.getTransaction().commit();
+				session.close();
 				
 			}
 		}

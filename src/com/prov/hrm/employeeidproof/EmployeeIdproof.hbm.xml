@@ -11,7 +11,7 @@
         <many-to-one name="employee" class="com.prov.hrm.employee.Employee" lazy="false" update="false">
             <column name="employee_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="idType" class="com.prov.hrm.idtype.Idtype" lazy="false" update="false">
+        <many-to-one name="idType" class="com.prov.hrm.idtype.Idtype" lazy="false">
             <column name="idtype_id" not-null="true" />
         </many-to-one>
         <property name="organizationId" type="int" update="false">

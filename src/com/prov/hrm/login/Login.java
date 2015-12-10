@@ -1,6 +1,8 @@
 package com.prov.hrm.login;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.prov.hrm.employee.Employee;
 
 
@@ -9,6 +11,9 @@ public class Login
 {
 	private int loginId;
 	private int organizationId;
+
+//	@JsonIgnoreProperties({"roleId","contactNumber","empType","panNumber","passportNumber","passportValidity","visaAvailablity","workexpYears"})
+	@JsonUnwrapped
 	private Employee employee;
 	private String loginName;
 	@JsonIgnore
@@ -50,7 +55,7 @@ public class Login
 	public void setOrganizationId(int organizationId) {
 		this.organizationId = organizationId;
 	}
-	
+
 	public Employee getEmployee() {
 		return employee;
 	}
@@ -139,17 +144,16 @@ public class Login
 		this.deleteFlag = deleteFlag;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Login [loginId=" + loginId + ", organizationId="
-				+ organizationId + ", loginName=" + loginName + ", loginPassword="
-				+ loginPassword + ", encryptName=" + encryptName
-				+ ", encryptPassword=" + encryptPassword + ", superadminFlag="
-				+ superadminFlag + ", insertBy=" + insertBy + ", insertDate="
-				+ insertDate + ", updateBy=" + updateBy + ", updateDate="
-				+ updateDate + ", deleteFlag=" + deleteFlag + "]";
+		return "{loginId=" + loginId + ", organizationId=" + organizationId
+				+ ", employee=" + employee + ", loginName=" + loginName
+				+ ", loginPassword=" + loginPassword + ", encryptName="
+				+ encryptName + ", encryptPassword=" + encryptPassword
+				+ ", superadminFlag=" + superadminFlag + ", insertBy="
+				+ insertBy + ", insertDate=" + insertDate + ", updateBy="
+				+ updateBy + ", updateDate=" + updateDate + ", deleteFlag="
+				+ deleteFlag + "}";
 	}
-	
-
-
 }

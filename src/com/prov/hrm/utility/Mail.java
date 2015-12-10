@@ -35,7 +35,7 @@ public class Mail {
 						"angularJS123");
 			}
 		});
-		String body = "<p> Hi"+name+",</p><p>Welcome onboard</p><p>Your username is "
+		String body = "<p> Hi "+name+",</p><p>Welcome onboard</p><p>Your username is "
 				+ username + "</p><p>Your password is " + password + "</p>"+"<a href=\"http://220.225.222.172/projects/ProvAdminConsole/\">Click Here To Login</a>";
 
 		

@@ -1,5 +1,9 @@
 package com.prov.hrm.employeeeducation;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
+import com.prov.hrm.announcement.Announcement;
 import com.prov.hrm.employee.Employee;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
@@ -19,20 +24,33 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 	public List<EmployeeEducation> getAllEmployeeEducation(int organizationId)
 			throws HibernateException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		List<EmployeeEducation> employeeeducation=new ArrayList<>();
+		List<EmployeeEducation> employeeeducation1=new ArrayList<>();
 		try {
 			session.beginTransaction();
 			Criteria criteria = session.createCriteria(EmployeeEducation.class);
 			criteria.add(Restrictions.eq("organizationId", organizationId));
 			criteria.add(Restrictions.eq("deleteFlag", false));
-			return criteria.list();
+			employeeeducation= criteria.list();
+			session.getTransaction().commit();
+			SimpleDateFormat indate=new SimpleDateFormat("yyyy-mm-dd");
+			SimpleDateFormat outdate=new SimpleDateFormat("yyyy");
+			Iterator<EmployeeEducation> iterator= employeeeducation.iterator();
+			while(iterator.hasNext()) {
+				EmployeeEducation empeducation=(EmployeeEducation)iterator.next();
+				Date year = indate.parse(empeducation.getPassingYear());
+				empeducation.setPassingYear(outdate.format(year));
+				employeeeducation1.add(empeducation);
+			}
+			return employeeeducation1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			session.getTransaction().commit();
-			
+		} finally{
+			session.close();
 		}
 
+		
 	}
 	
 	//GET A SINGLE RECORD by employeeId
@@ -42,18 +60,30 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 			Session session=SessionFactoryUtil.getSessionFactory().openSession();
 			try{
 				session.beginTransaction();
+				List<EmployeeEducation> employeeeducation=new ArrayList<>();
+				List<EmployeeEducation> employeeeducation1=new ArrayList<>();
 				Criteria criteria = session.createCriteria(EmployeeEducation.class);
 				criteria.add(Restrictions.eq("employee", new Employee(employeeId)));
 				criteria.add(Restrictions.eq("organizationId", organizationId));
 				criteria.add(Restrictions.eq("deleteFlag", false));
-				return (List<EmployeeEducation>) criteria.list();
+				employeeeducation= criteria.list();
+				session.getTransaction().commit();
+				SimpleDateFormat indate=new SimpleDateFormat("yyyy-mm-dd");
+				SimpleDateFormat outdate=new SimpleDateFormat("yyyy");
+				Iterator<EmployeeEducation> iterator= employeeeducation.iterator();
+				while(iterator.hasNext()) {
+					EmployeeEducation empeducation=(EmployeeEducation)iterator.next();
+					Date year = indate.parse(empeducation.getPassingYear());
+					empeducation.setPassingYear(outdate.format(year));
+					employeeeducation1.add(empeducation);
+				}
+				return  employeeeducation1;
 				} catch (Exception e) {
 					e.printStackTrace();
 					return null;
-				} finally {
-					session.getTransaction().commit();
-					
-				}
+				}finally{
+					session.close();
+				} 
 			}
 	
 	
@@ -72,6 +102,7 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 					EmployeeEducation.class, empeducationId);
 			if (empeducation != null) {
 				if (!empeducation.getDeleteFlag()) {
+					
 					return empeducation;
 				} else {
 					return null;
@@ -84,7 +115,7 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 			return null;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
 	// ADD A EMPLOYEE EDUCATION DETAILS IN tblempeducation
@@ -99,7 +130,13 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 					new java.util.Date().getTime());
 			employeeeducation.setUpdateDate(date.toString());
 			employeeeducation.setInsertDate(date.toString());
-			session.save(employeeeducation);
+			
+			 /*SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat indate = new SimpleDateFormat("yyyy");
+			
+			 Date year = indate.parse(employeeeducation.getPassingYear());
+			employeeeducation.setPassingYear(outdate.format(year));
+			*/session.save(employeeeducation);
 			status = 1;
 			return status;
 		} catch (Exception e) {
@@ -107,7 +144,7 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 			return 0;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
 
@@ -126,6 +163,12 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 			if (empeducation != null) {
 				employeeeducation.setInsertBy(empeducation.getInsertBy());
 				employeeeducation.setInsertDate(empeducation.getInsertDate());
+				/* 
+				SimpleDateFormat outdate = new SimpleDateFormat("yyyy-MM-dd");
+				 SimpleDateFormat indate = new SimpleDateFormat("yyyy");
+				
+				 Date year = indate.parse(employeeeducation.getPassingYear());
+				employeeeducation.setPassingYear(outdate.format(year));*/
 				session.update(employeeeducation);
 			} else {
 				return status;
@@ -137,21 +180,22 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 			return status;
 		} finally {
 			session.getTransaction().commit();
-			
+			session.close();
 		}
 	}
 	// DELETE A EMPLOYEE EDUCATION DETAILS (SOFT DELETE)
 	public int deleteEmployeeEducation(int empeducationId)throws HibernateException, ConstraintViolationException {
 		int status = 0;
+		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		try {
+			session.beginTransaction();
 			EmployeeEducation employeeeducation = getEmployeeEducationId(empeducationId);
 			if (employeeeducation != null) {
 				java.sql.Timestamp date = new java.sql.Timestamp(
 						new java.util.Date().getTime());
 				employeeeducation.setUpdateDate(date.toString());
-				employeeeducation.setUpdateBy(null);
 				employeeeducation.setDeleteFlag(true);
-				updateEmployeeEducation(employeeeducation);
+				session.update(employeeeducation);
 				status = 1;
 				return status;
 			} else {
@@ -160,6 +204,9 @@ public class EmployeeEducationDAOImpl implements EmployeeEducationDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return status;
+		}finally{
+			session.getTransaction().commit();
+			session.close();
 		}
 	}
 	// DELETE A EMPLOYEE EDUCATION DETAILS (HARD DELETE)

@@ -44,6 +44,15 @@ public class Employee{
 	private boolean deleteFlag;
 	@JsonIgnore
 	private Set<Login> login;
+	private String name;
+
+	public String getName() {
+		return firstName+" "+lastName;
+	}
+
+	public void setName(String name) {
+		this.name = firstName+" "+lastName;
+	}
 
 	public Employee() {
 		super();

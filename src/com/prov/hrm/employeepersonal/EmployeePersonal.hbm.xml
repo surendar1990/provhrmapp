@@ -26,22 +26,22 @@
         <property name="organizationId" type="int" update="false">
             <column name="organization_id" not-null="true" />
         </property>
-        <property name="fatherName" type="string" update="false">
+        <property name="fatherName" type="string" >
             <column name="father_name" length="20" not-null="true" />
         </property>
-        <property name="motherName" type="string" update="false">
+        <property name="motherName" type="string" >
             <column name="mother_name" length="20" not-null="true" />
         </property>
-        <property name="dateOfBirth" type="string" update="false">
+        <property name="dateOfBirth" type="string" >
             <column name="date_of_birth" length="0" not-null="true" />
         </property>
-        <property name="gender" type="string" update="false">
+        <property name="gender" type="string">
             <column name="gender" length="1" not-null="true" />
         </property>
         <property name="maritalStatus" type="string">
             <column name="marital_status" length="1" not-null="true" />
         </property>
-        <property name="bloodGroup" type="string" update="false">
+        <property name="bloodGroup" type="string" >
             <column name="blood_group" length="6" />
         </property>
         <property name="alternateContactNumber" type="string">
