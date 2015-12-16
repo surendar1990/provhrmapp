@@ -1,46 +1,153 @@
 package com.prov.hrm.utility;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.prov.hrm.department.Department;
+import com.prov.hrm.employee.Employee;
+import com.prov.hrm.employeeleave.EmployeeLeave;
+import com.prov.hrm.employeeleaveeligibility.EmployeeLeaveEligibility;
 import com.prov.hrm.leavetype.LeaveType;
 
 public class LeaveCalculator {
-	
-	public List LeaveCalculator(int organizationId, int employeeId){
-		Session session=SessionFactoryUtil.getSessionFactory().openSession();
-		List<LeaveType> leave1=new ArrayList<>();
-		List<LeaveType> leave2=new ArrayList<>();
+
+	public List<LeaveCalculation> LeaveCalculator(int organizationId,
+			int employeeId) throws ParseException {
+		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		// List<LeaveType> leave1 = new ArrayList<>();
 		session.beginTransaction();
-		/*Query query=session.createSQLQuery("select tblempleaveeligibility.leavetype_id, tblempleaveeligibility.eligibilitydays as eligibilitydays,(tblempleaveeligibility.eligibilitydays-tblempleave.total_days) as eligibility"
-				+ " from tblempleaveeligibility inner join tblempleave on tblempleaveeligibility.employee_id='"+employeeId+"' and tblempleave.employee_id='"+employeeId+"' and"
-						+ " tblempleaveeligibility.leavetype_id=tblempleave.leavetype_id and tblempleaveeligibility.organization_id='"+organizationId+"' and"
-								+ " tblempleave.organization_id='"+organizationId+"'");
-		Query query=session.createSQLQuery("select tblleavetype.leavetype, tblleavetype.leavetype_id,tblempleaveeligibility.eligibilitydays,"
-				+ "( select sum(tblempleave.total_days) from tblempleave where tblempleave.leavetype_id = tblleavetype.leavetype_id and"
-				+ " tblempleave.employee_id='"+employeeId+"' and tblempleave.organization_id='"+organizationId+"')-(tblempleaveeligibility.eligibilitydays) as sum_value"
-				+ "	from tblleavetype join tblempleaveeligibility where tblleavetype.organization_id=3 and "
-				+ "tblempleaveeligibility.employee_id='"+employeeId+"' and tblempleaveeligibility.organization_id='"+organizationId+"' and"
-				+ " tblempleaveeligibility.leavetype_id=tblleavetype.leavetype_id ");
-		*/
-		
-		Query query=session.createSQLQuery("select tblleavetype.leavetype, tblleavetype.leavetype_id,tblempleaveeligibility.eligibilitydays,"
-				+ "(tblempleaveeligibility.eligibilitydays)-(  select coalesce(sum(a.total_days),0) from tblempleave as a"
-				+ " where a.leavetype_id = tblleavetype.leavetype_id and a.employee_id='"+employeeId+"'"
-				+ " and a.organization_id='"+organizationId+"' and a.delete_flag=0 and a.status in ('a','p')) as sum_value"
-								+ " from tblleavetype join tblempleaveeligibility where tblleavetype.organization_id='"+organizationId+"' "
-										+ "and tblempleaveeligibility.employee_id='"+employeeId+"' and tblempleaveeligibility.organization_id='"+organizationId+"'"
-												+ " and tblempleaveeligibility.leavetype_id=tblleavetype.leavetype_id and tblempleaveeligibility.delete_flag=0 and tblleavetype.delete_flag=0");
-		session.getTransaction().commit();
-		return query.list();
-		
-		
+		HashMap<String, String> list = Getaccountyear.getaccountingyear(
+				organizationId, "C");
+		List<LeaveCalculation> ls = new ArrayList<LeaveCalculation>();
+		SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+		Date datefrom = sdfOut.parse(list.get("fromdate"));
+		Date dateto = sdfOut.parse(list.get("todate"));
+		String fromDate = sdinput.format(datefrom);
+		String toDate = sdinput.format(dateto);
+		System.out.println(fromDate + "" + toDate);
+		Criteria criteria = session
+				.createCriteria(EmployeeLeaveEligibility.class)
+				.add(Restrictions.eq("employee", new Employee(employeeId)))
+				.add(Restrictions.eq("organizationId", organizationId))
+				.add(Restrictions.between("fromDate", fromDate, toDate))
+				.add(Restrictions.between("toDate", fromDate, toDate))
+				.add(Restrictions.eq("deleteFlag", false));
+		Iterator<EmployeeLeaveEligibility> ite1 = criteria.list().iterator();
+		LeaveCalculation leaveCalc = null;
+		while (ite1.hasNext()) {
+			EmployeeLeaveEligibility empl = (EmployeeLeaveEligibility) ite1
+					.next();
+			Criterion rhs = Restrictions.eq("status", "p");
+			Criterion lhs = Restrictions.eq("status", "a");
+			Criteria crteria1 = session
+					.createCriteria(EmployeeLeave.class)
+					.add(Restrictions.eq("employee", new Employee(employeeId)))
+					.add(Restrictions.eq("organizationId", organizationId))
+					.add(Restrictions.or(lhs, rhs))
+					.add(Restrictions.eq("leaveType", new LeaveType(empl
+							.getLeaveType().getLeavetypeId())))
+					.add(Restrictions.between("fromDate", empl.getFromDate(),
+							empl.getToDate()))
+					.add(Restrictions.between("toDate", empl.getFromDate(),
+							empl.getToDate()))
+					.add(Restrictions.eq("deleteFlag", false))
+					.setProjection(Projections.sum("totalDays"));
+			leaveCalc = new LeaveCalculation();
+			leaveCalc.setLeavetype(empl.getLeaveType().getLeavetype());
+			leaveCalc.setLeavetypeId(empl.getLeaveType().getLeavetypeId());
+			Float calc = (Float) crteria1.list().get(0);
+			leaveCalc.setAvailabledays(calc != null ? empl.getEligibilitydays()
+					- calc : empl.getEligibilitydays());
+			leaveCalc.setEligibledays(empl.getEligibilitydays());
+			ls.add(leaveCalc);
+
+		}
+
+		return ls;
+	}
+
+	public List<LeaveCalculation> LeaveCalculatorEdit(int employeeleaveId)
+			throws ParseException {
+		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		// List<LeaveType> leave1 = new ArrayList<>();
+		session.beginTransaction();
+		EmployeeLeave empleave = (EmployeeLeave) session.get(
+				EmployeeLeave.class, employeeleaveId);
+		HashMap<String, String> list = Getaccountyear.getaccountingyear(
+				empleave.getOrganizationId(), "C");
+		List<LeaveCalculation> ls = new ArrayList<LeaveCalculation>();
+		SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+		Date datefrom = sdfOut.parse(list.get("fromdate"));
+		Date dateto = sdfOut.parse(list.get("todate"));
+		String fromDate = sdinput.format(datefrom);
+		String toDate = sdinput.format(dateto);
+		System.out.println(fromDate + "" + toDate);
+		Criteria criteria = session
+				.createCriteria(EmployeeLeaveEligibility.class)
+				.add(Restrictions.eq("employee", new Employee(empleave
+						.getEmployee().getEmployeeId())))
+				.add(Restrictions.eq("organizationId",
+						empleave.getOrganizationId()))
+				.add(Restrictions.between("fromDate", fromDate, toDate))
+				.add(Restrictions.between("toDate", fromDate, toDate))
+				.add(Restrictions.eq("deleteFlag", false));
+		Iterator<EmployeeLeaveEligibility> ite1 = criteria.list().iterator();
+		LeaveCalculation leaveCalc = null;
+
+		while (ite1.hasNext()) {
+			EmployeeLeaveEligibility empl = (EmployeeLeaveEligibility) ite1
+					.next();
+			Criterion rhs = Restrictions.eq("status", "p");
+			Criterion lhs = Restrictions.eq("status", "a");
+			Criteria crteria1 = session
+					.createCriteria(EmployeeLeave.class)
+					.add(Restrictions.eq("employee", new Employee(empleave
+							.getEmployee().getEmployeeId())))
+					.add(Restrictions.eq("organizationId",
+							empleave.getOrganizationId()))
+					.add(Restrictions.or(lhs, rhs))
+					.add(Restrictions.eq("leaveType", new LeaveType(empl
+							.getLeaveType().getLeavetypeId())))
+					.add(Restrictions.between("fromDate", empl.getFromDate(),
+							empl.getToDate()))
+					.add(Restrictions.between("toDate", empl.getFromDate(),
+							empl.getToDate()))
+					.add(Restrictions.eq("deleteFlag", false))
+					.setProjection(Projections.sum("totalDays"));
+			leaveCalc = new LeaveCalculation();
+			leaveCalc.setLeavetype(empl.getLeaveType().getLeavetype());
+			leaveCalc.setLeavetypeId(empl.getLeaveType().getLeavetypeId());
+			if (empleave.getLeaveType().getLeavetypeId() == empl.getLeaveType()
+					.getLeavetypeId()) {
+				Float calc = (Float) crteria1.list().get(0);
+				leaveCalc.setAvailabledays(calc != null ? (empl
+						.getEligibilitydays() - calc) + empleave.getTotalDays()
+						: empl.getEligibilitydays());
+			} else {
+				Float calc = (Float) crteria1.list().get(0);
+				leaveCalc.setAvailabledays(calc != null ? (empl
+						.getEligibilitydays() - calc) : empl
+						.getEligibilitydays());
+			}
+			leaveCalc.setEligibledays(empl.getEligibilitydays());
+			ls.add(leaveCalc);
+		}
+
+		return ls;
 	}
 
 }

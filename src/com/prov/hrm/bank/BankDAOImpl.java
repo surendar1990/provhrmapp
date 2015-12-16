@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
+import com.prov.hrm.employeebank.EmployeeBank;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
 public class BankDAOImpl implements BankDAO {
@@ -118,8 +119,15 @@ public class BankDAOImpl implements BankDAO {
 	// Soft Delete a record from tblbank for specific bank_id
 	public int deleteBank(int bankId) {
 		int status = 0;
+		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		try {
 			Bank bank = getBankById(bankId);
+			Criteria criteria = session.createCriteria(EmployeeBank.class);
+			criteria.add(Restrictions.eq("organizationId", bank.getOrganizationId()));
+			criteria.add(Restrictions.eq("deleteFlag", false));
+			criteria.add(Restrictions.eq("bank", bank.getBankId()));
+			
+			
 			if (bank != null) {
 				java.sql.Timestamp date = new java.sql.Timestamp(
 						new java.util.Date().getTime());

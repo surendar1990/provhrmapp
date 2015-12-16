@@ -95,7 +95,7 @@ public class EmployeeLeaveEligibilityDAOImpl implements
 				leavecriteria.add(Restrictions.eq("organizationId", organizationId));
 				leavecriteria.add(Restrictions.eq("deleteFlag", false));
 				EmployeeLeaveEligibility empeligibilitycriteria=(EmployeeLeaveEligibility) session.get(EmployeeLeaveEligibility.class,employeeId);
-				Query query=session.createSQLQuery("select e.empleaveeligibility_id,d.organization_id,e.employee_id,e.from_date,e.to_date,e.eligibilitydays,d.leavetype_id,d.leavetype,d.eligible_days,d.leave_description from"
+				Query query=session.createSQLQuery("select e.empleaveeligibility_id,d.organization_id,e.employee_id,e.from_date,e.to_date,e.eligibilitydays,d.leavetype_id,d.leavetype,d.eligible_days,d.leave_description,e.leave_reporting_head,e.leave_reporting_to,e.leave_reporting_hr from"
 						+ " (select * from tblempleaveeligibility as a where a.employee_id='"+employeeId+"' and a.organization_id='"+organizationId+"' and a.delete_flag=0) e RIGHT JOIN "
 						+ " tblleavetype d on e.leavetype_id=d.leavetype_id where d.organization_id='"+organizationId+"' and d.delete_flag=0");
 	            session.flush();

@@ -12,6 +12,7 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -124,6 +125,12 @@ public class EmployeeDAOImpl implements EmployeeDAO
 		int status=0;
 		try {
 			session.beginTransaction();
+			Criterion rest1= Restrictions.eq("deleteFlag", true);
+			Criterion rest2=Restrictions.eq("deleteFlag", false);
+			Employee emp=(Employee)session.createCriteria(Employee.class)
+					.add(Restrictions.eq("emailId",employee.getEmailId()))
+					.add(Restrictions.or(rest1,rest2)).uniqueResult();
+			if(emp==null){
 			encryptname = new Encryption().encrypt(employee.getEmailId());
 			encryptpassword = new Encryption().encrypt("Prov@123");
 			
@@ -160,9 +167,13 @@ public class EmployeeDAOImpl implements EmployeeDAO
 			{
 				boolean mailStatus=Mail.sendMailForCreateUser(employee.getEmailId(),employee.getFirstName(), employee.getEmailId(), "Prov@123");
 				status=3;
-				return mailStatus?key:1;
+				return mailStatus?key:key;
 			}
-
+			}
+			else
+			{
+				status=5;
+			}
 
 			return status;
 

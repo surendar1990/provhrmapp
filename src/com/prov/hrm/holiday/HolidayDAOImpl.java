@@ -9,16 +9,18 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
 import com.prov.hrm.employeeleave.EmployeeLeave;
+import com.prov.hrm.leavetype.LeaveType;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
 public class HolidayDAOImpl implements HolidayDAO {
 
 	// Return all record from tblholiday
-	public List<Holiday> getAllHoliday(int organizationid)
+/*	public List<Holiday> getAllHoliday(int organizationid)
 			throws HibernateException {
 		Session session = SessionFactoryUtil.getSessionFactory().openSession();
 		try {
@@ -29,6 +31,7 @@ public class HolidayDAOImpl implements HolidayDAO {
 			Criteria criteria = session.createCriteria(Holiday.class);
 			criteria.add(Restrictions.eq("organizationId", organizationid));
 			criteria.add(Restrictions.eq("deleteFlag", false));
+			criteria.addOrder(Order.asc("holidayDate"));
 			holiday=criteria.list();
 			session.getTransaction().commit();
 			Iterator<Holiday> iterator = holiday.iterator();
@@ -49,7 +52,49 @@ public class HolidayDAOImpl implements HolidayDAO {
 			session.close();
 		}
 
+	}*/
+	
+	
+	public List<Holiday> getAllHoliday(int organizationId,String fromDate,String toDate)
+			throws HibernateException, ConstraintViolationException {
+		Session session = SessionFactoryUtil.getSessionFactory().openSession();
+		 List<Holiday> holiday=new ArrayList<Holiday>();
+		 List<Holiday> hday=new ArrayList<Holiday>();
+		try {
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			 	Date datefrom = sdfOut.parse(fromDate);
+				Date dateto = sdfOut.parse(toDate); 
+				fromDate=sdinput.format(datefrom);
+				toDate=sdinput.format(dateto);
+			session.beginTransaction();
+			Criteria criteria = session.createCriteria(Holiday.class);
+			criteria.add(Restrictions.eq("organizationId", organizationId));
+			criteria.add(Restrictions.eq("deleteFlag", false));
+			criteria.add(Restrictions.between("holidayDate", fromDate, toDate));
+			//criteria.add(Restrictions.between("toDate", fromDate, toDate));
+			holiday=criteria.list();
+			session.getTransaction().commit();
+			Iterator<Holiday> ite = holiday.iterator();
+			while(ite.hasNext()) {
+				Holiday holi=(Holiday)ite.next();
+				Date dateFrom = sdinput.parse(holi.getHolidayDate());
+				//Date dateTo = sdinput.parse(holi.getToDate());
+				holi.setHolidayDate(sdfOut.format(dateFrom));
+				//holi.setToDate(sdfOut.format(dateTo));
+				hday.add(holi);
+			}
+			return hday;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			session.close();
+		
+		}
 	}
+
+
 
 	// Return a record from tblholiday for specific holiday_id
 	public Holiday getHolidayById(int holidayId) throws HibernateException,

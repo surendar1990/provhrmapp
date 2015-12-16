@@ -10,12 +10,14 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
 import com.prov.hrm.Mail.LeaveRequestSend;
 import com.prov.hrm.employee.Employee;
+import com.prov.hrm.employeeleaveeligibility.EmployeeLeaveEligibility;
 import com.prov.hrm.leavetype.LeaveType;
 import com.prov.hrm.utility.LeaveRequestMail;
 import com.prov.hrm.utility.SessionFactoryUtil;
@@ -44,18 +46,43 @@ public class EmployeeLeaveDAOImpl implements EmployeeLeaveDAO {
 			Iterator<EmployeeLeave> ite = employeeLeaves.iterator();
 			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
 			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			 EmployeeLeave leave=null;
 			while(ite.hasNext()) {
-				EmployeeLeave leave=(EmployeeLeave)ite.next();
+				leave=new EmployeeLeave();
+				leave=(EmployeeLeave)ite.next();
 				Date formDate = sdinput.parse(leave.getFromDate());
 				Date toDate = sdinput.parse(leave.getToDate());
 				leave.setFromDate(sdfOut.format(formDate));
 				leave.setToDate(sdfOut.format(toDate));
-				String fname=leave.getEmployee().getFirstName();
-				String lname=leave.getEmployee().getLastName();
-				String name=fname+" "+lname;
-				leave.getEmployee().setName(name);
-				empLeaves.add(leave);
+				String leaveStat=leave.getStatus();
+				if(leaveStat.matches("P|p"))
+				{
+					
+					empLeaves.add(leave);
+				}
+			}ite = employeeLeaves.iterator();
+			while(ite.hasNext()) {
+				leave=new EmployeeLeave();
+				leave=(EmployeeLeave)ite.next();
+				String leaveStat=leave.getStatus();
+				if(leaveStat.matches("A|a"))
+				{
+					
+					empLeaves.add(leave);
+				}
 			}
+			ite = employeeLeaves.iterator();
+			while(ite.hasNext()) {
+				leave=new EmployeeLeave();
+				leave=(EmployeeLeave)ite.next();
+				String leaveStat=leave.getStatus();
+				if(leaveStat.matches("R|r"))
+				{
+					
+					empLeaves.add(leave);
+				}
+			}
+			
 			return empLeaves;
 		} catch (Exception e) {
 			session.getTransaction().rollback();
@@ -66,6 +93,79 @@ public class EmployeeLeaveDAOImpl implements EmployeeLeaveDAO {
 		}
 
 	}
+	
+	//Get list of employee leave detail for corresponding Approval Authority
+		public List<EmployeeLeave> getAllEmployeeLeaveForEmployeeApproval(int employeeId,int organizationId)
+				throws HibernateException {
+			Session session = SessionFactoryUtil.getSessionFactory().openSession();
+			
+			List<EmployeeLeave> employeeLeaves=new ArrayList<EmployeeLeave>();
+			
+			List<EmployeeLeave> empLeaves=new ArrayList<EmployeeLeave>();
+			Criterion lhs=Restrictions.or(Restrictions.eq("leaveReportingTo", employeeId),Restrictions.eq("leaveReportingHead", employeeId));
+			try {
+				session.beginTransaction();
+				Criteria criteria1=session.createCriteria(EmployeeLeaveEligibility.class)
+						.add(Restrictions.eq("organizationId", organizationId))
+						.add(Restrictions.or(lhs,Restrictions.eq("leaveReportingHr", employeeId)))
+						.add(Restrictions.eq("deleteFlag", false));
+				System.out.println(criteria1.list());
+				Criteria criteria = session.createCriteria(EmployeeLeave.class);
+				criteria.add(Restrictions.eq("organizationId", organizationId));
+				criteria.add(Restrictions.eq("deleteFlag", false));
+				criteria.addOrder(Order.desc("fromDate"));
+				employeeLeaves=criteria.list();
+				session.getTransaction().commit();
+				Iterator<EmployeeLeave> ite = employeeLeaves.iterator();
+				 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+				 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+				 EmployeeLeave leave=null;
+					while(ite.hasNext()) {
+						leave=new EmployeeLeave();
+						leave=(EmployeeLeave)ite.next();
+						Date formDate = sdinput.parse(leave.getFromDate());
+						Date toDate = sdinput.parse(leave.getToDate());
+						leave.setFromDate(sdfOut.format(formDate));
+						leave.setToDate(sdfOut.format(toDate));
+						String leaveStat=leave.getStatus();
+						if(leaveStat.matches("P|p"))
+						{
+							leave.setStatus("Pending");
+							empLeaves.add(leave);
+						}
+					}ite = employeeLeaves.iterator();
+					while(ite.hasNext()) {
+						leave=new EmployeeLeave();
+						leave=(EmployeeLeave)ite.next();
+						String leaveStat=leave.getStatus();
+						if(leaveStat.matches("A|a"))
+						{
+							leave.setStatus("Approved");
+							empLeaves.add(leave);
+						}
+					}
+					ite = employeeLeaves.iterator();
+					while(ite.hasNext()) {
+						leave=new EmployeeLeave();
+						leave=(EmployeeLeave)ite.next();
+						String leaveStat=leave.getStatus();
+						if(leaveStat.matches("R|r"))
+						{
+							leave.setStatus("Rejected");
+							empLeaves.add(leave);
+						}
+					}
+				return employeeLeaves;
+			} catch (Exception e) {
+				session.getTransaction().rollback();
+				e.printStackTrace();
+				return null;
+			} finally {
+				session.close();
+				SessionFactoryUtil.getSessionFactory().close();
+			}
+
+		}
 	@Override
 	public List<EmployeeLeave> getEmployeebyEmployeeId(int employeeId,
 			int organizationId) throws HibernateException {

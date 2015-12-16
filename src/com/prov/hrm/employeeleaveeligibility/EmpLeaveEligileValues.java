@@ -15,6 +15,9 @@ public class EmpLeaveEligileValues
     Integer totaleligible_days;
 	String leave_description;
 	String flag;
+	Integer leave_reporting_head;
+	Integer leave_reporting_to;
+	Integer leave_reporting_hr;
 	public String getFlag() {
 		return flag;
 	}
@@ -76,11 +79,30 @@ public class EmpLeaveEligileValues
 	public void setTotaleligible_days(Integer totaleligible_days) {
 		this.totaleligible_days = totaleligible_days;
 	}
+	
 	public String getLeave_description() {
 		return leave_description;
 	}
 	public void setLeave_description(String leave_description) {
 		this.leave_description = leave_description;
+	}
+	public Integer getLeave_reporting_head() {
+		return leave_reporting_head;
+	}
+	public void setLeave_reporting_head(Integer leave_reporting_head) {
+		this.leave_reporting_head = leave_reporting_head;
+	}
+	public Integer getLeave_reporting_to() {
+		return leave_reporting_to;
+	}
+	public void setLeave_reporting_to(Integer leave_reporting_to) {
+		this.leave_reporting_to = leave_reporting_to;
+	}
+	public Integer getLeave_reporting_hr() {
+		return leave_reporting_hr;
+	}
+	public void setLeave_reporting_hr(Integer leave_reporting_hr) {
+		this.leave_reporting_hr = leave_reporting_hr;
 	}
 	@Override
 	public String toString() {

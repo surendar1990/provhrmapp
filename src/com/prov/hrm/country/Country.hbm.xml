@@ -11,7 +11,7 @@
         <property name="country" type="string">
             <column name="country" length="30" not-null="true" unique="true" />
         </property>
-        <property name="insertBy" type="java.lang.Integer" update="false">
+        <property name="insertBy" type="java.lang.Integer">
             <column name="insert_by" />
         </property>
         <property name="insertDate" type="string" update="false">

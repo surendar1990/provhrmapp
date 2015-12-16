@@ -15,6 +15,7 @@ public class Organization {
 	private String organizationContactPerson;
 	private String organizationUrl;
 	private String organizationEmail;
+	private String organizationLeaveAccountingMethod;
 	@JsonIgnore
 	private Set<Login> login;
 	@JsonIgnore
@@ -37,6 +38,13 @@ public class Organization {
 		super();
 	}
 
+	public String getOrganizationLeaveAccountingMethod() {
+		return organizationLeaveAccountingMethod;
+	}
+
+	public void setOrganizationLeaveAccountingMethod(String organizationLeaveAccountingMethod) {
+		this.organizationLeaveAccountingMethod = organizationLeaveAccountingMethod;
+	}
 	public Integer getOrganizationId() {
 		return this.organizationId;
 	}

@@ -24,10 +24,13 @@
             <column name="organization_contact_person" length="20" not-null="true" />
         </property>
         <property name="organizationUrl" type="string">
-            <column name="organization_url" length="25" not-null="true" />
+            <column name="organization_url" length="25"/>
         </property>
         <property name="organizationEmail" type="string">
             <column name="organization_email" length="45" not-null="true" />
+        </property>
+         <property name="organizationLeaveAccountingMethod" type="string">
+            <column name="organization_leave_accounting_method" length="2"  />
         </property>
         <property name="insertBy" type="java.lang.Integer">
             <column name="insert_by" />

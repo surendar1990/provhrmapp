@@ -28,6 +28,12 @@ public class LeaveTypeDAOImpl implements LeaveTypeDAO {
 		 List<LeaveType> leavtype=new ArrayList<LeaveType>();
 		 List<LeaveType> leavetype=new ArrayList<LeaveType>();
 		try {
+			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
+			 	Date datefrom = sdfOut.parse(fromDate);
+				Date dateto = sdfOut.parse(toDate); 
+				fromDate=sdinput.format(datefrom);
+				toDate=sdinput.format(dateto);
 			session.beginTransaction();
 			Criteria criteria = session.createCriteria(LeaveType.class);
 			criteria.add(Restrictions.eq("organizationId", organizationId));
@@ -37,8 +43,6 @@ public class LeaveTypeDAOImpl implements LeaveTypeDAO {
 			leavtype=criteria.list();
 			session.getTransaction().commit();
 			Iterator<LeaveType> ite = leavtype.iterator();
-			 SimpleDateFormat sdinput = new SimpleDateFormat("yyyy-MM-dd");
-			 SimpleDateFormat sdfOut = new SimpleDateFormat("dd-MM-yyyy");
 			while(ite.hasNext()) {
 				LeaveType leave=(LeaveType)ite.next();
 				Date dateFrom = sdinput.parse(leave.getFromDate());

@@ -26,6 +26,15 @@
         <property name="eligibilitydays" type="int">
             <column name="eligibilitydays" not-null="true" />
         </property>
+        <property name="leaveReportingHead" type="java.lang.Integer">
+			<column name="leave_reporting_head" />
+		</property>
+		<property name="leaveReportingTo" type="java.lang.Integer">
+			<column name="leave_reporting_to" />
+		</property>
+		<property name="leaveReportingHr" type="java.lang.Integer">
+			<column name="leave_reporting_hr" />
+		</property>
         <property name="insertBy" type="java.lang.Integer">
             <column name="insert_by" />
         </property>

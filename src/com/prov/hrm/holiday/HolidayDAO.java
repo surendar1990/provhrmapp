@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface HolidayDAO {
 
-	public List<Holiday> getAllHoliday(int organizationId);
+	public List<Holiday> getAllHoliday(int organizationId,String fromdate,String todate);
 
 	public int addHoliday(Holiday holiday);
 

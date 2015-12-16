@@ -1,5 +1,7 @@
 package com.prov.hrm.country;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
+import com.prov.hrm.leavetype.LeaveType;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
 public class CountryDAOImpl implements CountryDAO {
@@ -69,12 +72,32 @@ public class CountryDAOImpl implements CountryDAO {
 			session.beginTransaction();
 			java.sql.Timestamp date = new java.sql.Timestamp(
 					new java.util.Date().getTime());
-			country.setUpdateDate(date.toString());
-			country.setInsertDate(date.toString());
-			session.save(country);
+			Criteria criteria=session.createCriteria(Country.class);
+			criteria.add(Restrictions.eq("country",country.getCountry()));
+			criteria.add(Restrictions.eq("deleteFlag",true));
+			if(criteria.list().size()!=0){
+				List<Country> country1=new ArrayList<Country>();
+				country1=criteria.list();
+				Iterator<Country> ite= country1.iterator();
+				while(ite.hasNext()){
+					Country country2=ite.next();
+					country2.setDeleteFlag(false);
+					country2.setUpdateDate(date.toString());
+					country2.setInsertDate(date.toString());
+					country2.setInsertBy(country.getInsertBy());
+					country2.setUpdateBy(country.getUpdateBy());
+			session.update(country2);
+			}
+			}
+			else{
+				country.setUpdateDate(date.toString());
+				country.setInsertDate(date.toString());
+				session.save(country);
+			}
 			status = 1;
 			return status;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		} finally {

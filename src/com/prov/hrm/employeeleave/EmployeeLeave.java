@@ -3,6 +3,7 @@ import java.util.Date;
 
 
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -44,6 +45,11 @@ public class EmployeeLeave {
 	public EmployeeLeave() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public EmployeeLeave(Integer empleaveId) {
+		super();
+		this.empleaveId = empleaveId;
 	}
 
 	public Integer getEmpleaveId() {
@@ -188,6 +194,20 @@ public class EmployeeLeave {
 
 	public void setDeleteFlag(boolean deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+
+	@Override
+	public String toString() {
+		return "EmployeeLeave [empleaveId=" + empleaveId + ", employee="
+				+ employee + ", leaveType=" + leaveType + ", approvedBy="
+				+ approvedBy + ", organizationId=" + organizationId
+				+ ", fromDate=" + fromDate + ", fromHfflag=" + fromHfflag
+				+ ", toDate=" + toDate + ", toHfflag=" + toHfflag
+				+ ", totalDays=" + totalDays + ", empComment=" + empComment
+				+ ", approvalComment=" + approvalComment + ", status=" + status
+				+ ", insertBy=" + insertBy + ", insertDate=" + insertDate
+				+ ", updateBy=" + updateBy + ", updateDate=" + updateDate
+				+ ", deleteFlag=" + deleteFlag + "]";
 	}
 
 	

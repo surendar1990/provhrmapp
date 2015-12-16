@@ -31,17 +31,17 @@ public class Mail {
 		props.put("mail.smtp.port", "465");
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("sreemat.ap@provintl.com",
-						"angularJS123");
+				return new PasswordAuthentication("hariharan.p@provintl.com",
+						"hariharan@p");
 			}
 		});
 		String body = "<p> Hi "+name+",</p><p>Welcome onboard</p><p>Your username is "
-				+ username + "</p><p>Your password is " + password + "</p>"+"<a href=\"http://220.225.222.172/projects/ProvAdminConsole/\">Click Here To Login</a>";
+				+ username + "</p><p>Your password is " + password + "</p>"+"<a href=\"http://192.168.1.38/HRMGITT/#/\">Click Here To Login</a>";
 
 		
 		try {
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("sreemat.ap@provintl.com"));
+			message.setFrom(new InternetAddress("hariharan.p@provintl.com"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					toEmail));
 			message.setSubject("Welcome to ProV International");
@@ -56,6 +56,44 @@ public class Mail {
 		}
 	}
 
+	//send mail for creating Organization
+		public static boolean sendMailForCreateOrganization(String name,
+				 String username, String password) {
+
+			Properties props = new Properties();
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.socketFactory.class",
+					"javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "465");
+			Session session = Session.getInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("hariharan.p@provintl.com",
+							"hariharan@p");
+				}
+			});
+			String body = "<p> Hi Admin,</p><p>Your ORGANIZATION protal has been created. </p><p>Your Login Name is "
+					+ username + "</p><p>Your password is " + password + "</p>"+"<a href=\"http://192.168.1.38/HRMGITT/#/\">Click Here To Login</a>";
+
+			
+			try {
+				MimeMessage message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("hariharan.p@provintl.com"));
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+						username));
+				message.setSubject(""+name+" Login Portal");
+				message.setContent(body, "text/html");
+				
+				Transport.send(message);
+				return true;
+			} catch (MessagingException e) {
+				System.out.println(e.toString());
+				e.printStackTrace();
+				return false;
+			}
+		}
+
 	//Send mail for change password
 	public static boolean sendMailForChangePassword(String toEmail,String toUserName) {
 
@@ -68,8 +106,8 @@ public class Mail {
 		props.put("mail.smtp.port", "465");
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("sreemat.ap@provintl.com",
-						"angularJS123");
+				return new PasswordAuthentication("hariharan.p@provintl.com",
+						"hariharan@p");
 			}
 		});
 		String body = "<p>Dear "+toUserName+",</p><p>Your password is changed successfully.</p>";
@@ -77,7 +115,7 @@ public class Mail {
 		
 		try {
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("sreemat.ap@provintl.com"));
+			message.setFrom(new InternetAddress("hariharan.p@provintl.com"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					toEmail));
 			message.setSubject("Password Changed");
@@ -104,8 +142,8 @@ public class Mail {
 			props.put("mail.smtp.port", "465");
 			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("sreemat.ap@provintl.com",
-							"angularJS123");
+					return new PasswordAuthentication("hariharan.p@provintl.com",
+							"hariharan@p");
 				}
 			});
 			String body = "<p>Dear "+toUserName+",</p><p>Your password is "+password+".</p>";
@@ -113,7 +151,7 @@ public class Mail {
 			
 			try {
 				MimeMessage message = new MimeMessage(session);
-				message.setFrom(new InternetAddress("sreemat.ap@provintl.com"));
+				message.setFrom(new InternetAddress("hariharan.p@provintl.com"));
 				message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 						toEmail));
 				message.setSubject("Forget password");

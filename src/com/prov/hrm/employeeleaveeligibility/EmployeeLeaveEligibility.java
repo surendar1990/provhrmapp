@@ -19,6 +19,10 @@ public class EmployeeLeaveEligibility {
 	private String fromDate;
 	private String toDate;
 	private int eligibilitydays;
+	private Integer leaveReportingHead;
+	private Integer leaveReportingTo;
+	private Integer leaveReportingHr;
+
 	@JsonIgnore
 	private Integer insertBy;
 	@JsonIgnore
@@ -85,10 +89,33 @@ public class EmployeeLeaveEligibility {
 		return eligibilitydays;
 	}
 
+	
 	public void setEligibilitydays(int eligibilitydays) {
 		this.eligibilitydays = eligibilitydays;
 	}
+	public Integer getLeaveReportingHead() {
+		return leaveReportingHead;
+	}
 
+	public void setLeaveReportingHead(Integer leaveReportingHead) {
+		this.leaveReportingHead = leaveReportingHead;
+	}
+
+	public Integer getLeaveReportingTo() {
+		return leaveReportingTo;
+	}
+
+	public void setLeaveReportingTo(Integer leaveReportingTo) {
+		this.leaveReportingTo = leaveReportingTo;
+	}
+
+	public Integer getLeaveReportingHr() {
+		return leaveReportingHr;
+	}
+
+	public void setLeaveReportingHr(Integer leaveReportingHr) {
+		this.leaveReportingHr = leaveReportingHr;
+	}
 	public Integer getInsertBy() {
 		return insertBy;
 	}
@@ -137,7 +164,7 @@ public class EmployeeLeaveEligibility {
 				+ fromDate + ", toDate=" + toDate + ", eligibilitydays="
 				+ eligibilitydays + ", insertBy=" + insertBy + ", insertDate="
 				+ insertDate + ", updateBy=" + updateBy + ", updateDate="
-				+ updateDate + ", deleteFlag=" + deleteFlag + "}";
+				+ updateDate + ", deleteFlag=" + deleteFlag + "}\n";
 	}
 
 	

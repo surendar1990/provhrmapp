@@ -1,5 +1,6 @@
 package com.prov.hrm.organization;
 
+import java.nio.channels.SeekableByteChannel;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
 import com.prov.hrm.login.Login;
+import com.prov.hrm.utility.Mail;
 import com.prov.hrm.utility.SessionFactoryUtil;
 
 public class OrganizationDAOImpl implements OrganizationDAO {
@@ -58,7 +60,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 			e.printStackTrace();
 			return null;
 		} finally {
-			session.getTransaction().commit();
+			session.close();
 			
 		}
 	}
@@ -81,8 +83,14 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 			Set<Login> set=new HashSet<Login>();
 			set.add(login);
 			organization.setLogin(set);
-			session.save(organization);
+			int key=(int)session.save(organization);
 			status = 1;
+			if(status==1)
+			{
+				boolean mailStatus=Mail.sendMailForCreateOrganization(organization.getOrganizationName(), organization.getOrganizationEmail(), "Admin@123");
+				status=3;
+				return mailStatus?key:1;
+			}
 			return status;
 		} catch (Exception e) {
 			e.printStackTrace();
