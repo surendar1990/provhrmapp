@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.organization.Organization" table="tblorganization">
+        <id name="organizationId" type="java.lang.Integer">
+            <column name="organization_id" />
+            <generator class="identity" />
+        </id>
+        <property name="organizationName" type="string">
+            <column name="organization_name" length="45" not-null="true" />
+        </property>
+        <property name="organizationLocation" type="string">
+            <column name="organization_location" length="50" not-null="true" />
+        </property>
+        <property name="organizationAddress" type="string">
+            <column name="organization_address" length="150" not-null="true" />
+        </property>
+        <property name="organizationContactNumber" type="string">
+            <column name="organization_contact_number" length="15" not-null="true" />
+        </property>
+        <property name="organizationContactPerson" type="string">
+            <column name="organization_contact_person" length="20" not-null="true" />
+        </property>
+        <property name="organizationUrl" type="string">
+            <column name="organization_url" length="25"/>
+        </property>
+        <property name="organizationEmail" type="string">
+            <column name="organization_email" length="45" not-null="true" />
+        </property>
+         <property name="organizationLeaveAccountingMethod" type="string">
+            <column name="organization_leave_accounting_method" length="2"  />
+        </property>
+        <property name="insertBy" type="java.lang.Integer">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+        
+         <set name="login" inverse="true" cascade="all" >
+			<key column="organization_id"  />
+			<one-to-many class="com.prov.hrm.login.Login"/>
+		</set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.employeepersonal.EmployeePersonal" table="tblemppersonal">
+        <id name="emppersonalId" type="java.lang.Integer">
+            <column name="emppersonal_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="employee" class="com.prov.hrm.employee.Employee" fetch="select" lazy="false" update="false"> 
+            <column name="employee_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="currentStateprovince" class="com.prov.hrm.stateprovince.StateProvince" fetch="select" lazy="false">
+            <column name="current_stateprovince_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="permanentCountry" class="com.prov.hrm.country.Country" fetch="select" lazy="false">
+            <column name="permanent_country_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="currentCountry" class="com.prov.hrm.country.Country" fetch="select" lazy="false">
+            <column name="current_country_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="permanentStateprovince" class="com.prov.hrm.stateprovince.StateProvince" fetch="select" lazy="false">
+            <column name="permanent_stateprovince_id" not-null="true" />
+        </many-to-one>
+        <property name="organizationId" type="int" update="false">
+            <column name="organization_id" not-null="true" />
+        </property>
+        <property name="fatherName" type="string" >
+            <column name="father_name" length="20" not-null="true" />
+        </property>
+        <property name="motherName" type="string" >
+            <column name="mother_name" length="20" not-null="true" />
+        </property>
+        <property name="dateOfBirth" type="string" >
+            <column name="date_of_birth" length="0" not-null="true" />
+        </property>
+        <property name="gender" type="string">
+            <column name="gender" length="1" not-null="true" />
+        </property>
+        <property name="maritalStatus" type="string">
+            <column name="marital_status" length="1" not-null="true" />
+        </property>
+        <property name="bloodGroup" type="string" >
+            <column name="blood_group" length="6" />
+        </property>
+        <property name="alternateContactNumber" type="string">
+            <column name="alternate_contact_number" length="15" />
+        </property>
+        <property name="alternateEmailId" type="string">
+            <column name="alternate_email_id" length="50" />
+        </property>
+        <property name="currentAddress1" type="string">
+            <column name="current_address1" length="25" not-null="true" />
+        </property>
+        <property name="currentAddress2" type="string">
+            <column name="current_address2" length="25" />
+        </property>
+        <property name="currentPlace" type="string">
+            <column name="current_place" length="25" not-null="true" />
+        </property>
+        <property name="currentPincode" type="int">
+            <column name="current_pincode" not-null="true" />
+        </property>
+        <property name="permanentAddress1" type="string">
+            <column name="permanent_address1" length="25" not-null="true" />
+        </property>
+        <property name="permanentAddress2" type="string">
+            <column name="permanent_address2" length="25" />
+        </property>
+        <property name="permanentPlace" type="string">
+            <column name="permanent_place" length="25" not-null="true" />
+        </property>
+        <property name="permanentPincode" type="int">
+            <column name="permanent_pincode" not-null="true" />
+        </property>
+        <property name="insertBy" type="java.lang.Integer" update="false">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string" update="false">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.employeemarital.EmployeeMarital" table="tblempmarital" >
+        <id name="empmaritalId" type="java.lang.Integer">
+            <column name="empmarital_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="employee" class="com.prov.hrm.employee.Employee" lazy="false" update="false">
+            <column name="employee_id" not-null="true" />
+        </many-to-one>
+        <property name="organizationId" type="int" update="false">
+            <column name="organization_id" not-null="true" />
+        </property>
+        <property name="spouseName" type="string">
+            <column name="spouse_name" length="25" not-null="true" />
+        </property>
+        <property name="age" type="int">
+            <column name="age" not-null="true" />
+        </property>
+        <property name="noOfChildren" type="java.lang.Integer">
+            <column name="no_of_children" />
+        </property>
+        <property name="insertBy" type="java.lang.Integer" update="false">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string" update="false">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

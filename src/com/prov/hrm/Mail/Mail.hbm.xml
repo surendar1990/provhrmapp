@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+       "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.prov.hrm.mail">
+	<class name="Mail" table="tblmail">
+		<id name="mailId" column="mail_id">
+			<generator class="assigned" />
+		</id>
+		<!-- <property name="organization_id" column="organization_id" /> -->
+		<property name="emailPurpose" column="email_purpose" />
+		<property name="emailBody" column="email_body" />
+		<property name="emailSubject" column="email_subject" />
+		<!-- <property name="insert_by" column="insert_by" />
+		<property name="insert_date" column="insert_date" />
+		<property name="update_by" column="update_by" />
+		<property name="update_date" column="update_date" />
+		<property name="delete_flag" column="delete_flag" /> -->
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.employeeeducation.EmployeeEducation" table="tblempeducation">
+        <id name="empeducationId" type="java.lang.Integer">
+            <column name="empeducation_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="employee" class="com.prov.hrm.employee.Employee" lazy="false" update="false">
+            <column name="employee_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="educationLevel" class="com.prov.hrm.educationlevel.EducationLevel" lazy="false" update="false">
+            <column name="education_level_id" not-null="true" />
+        </many-to-one>
+        <property name="organizationId" type="int" update="false">
+            <column name="organization_id" not-null="true" />
+        </property>
+        <property name="education" type="string">
+            <column name="education" length="15" not-null="true" />
+        </property>
+        <property name="passingYear" type="string">
+            <column name="passing_year" not-null="true" />
+        </property>
+        <property name="percentage" type="float">
+            <column name="percentage" precision="5" not-null="true" />
+        </property>
+        <property name="institutionName" type="string">
+            <column name="institution_name" length="50" not-null="true" />
+        </property>
+        <property name="institutionPlace" type="string">
+            <column name="institution_place" length="100" not-null="true" />
+        </property>
+        <property name="institutionUniversity" type="string">
+            <column name="institution_university" length="50" not-null="true" />
+        </property>
+        <property name="insertBy" type="java.lang.Integer" update="false">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string" update="false">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

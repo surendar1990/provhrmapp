@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC  "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://192.168.1.146:3306/provhrmapp</property>
+		<property name="connection.username">user</property>
+		<property name="connection.password">user</property>
+		<property name="show_sql">true</property>
+		
+		<!-- <property name="hibernate.c3p0.min_size">5</property>
+  		<property name="hibernate.c3p0.max_size">100</property>
+  		<property name="hibernate.c3p0.timeout">3000000</property>
+  		<property name="hibernate.c3p0.max_statements">50</property>
+  		 -->
+		
+		<mapping resource="com/prov/hrm/announcement/Announcement.hbm.xml" />
+		<mapping resource="com/prov/hrm/attendancelog/AttendanceLog.hbm.xml" />
+		<mapping resource="com/prov/hrm/attendancelogfile/AttendanceLogFile.hbm.xml" />
+		<mapping resource="com/prov/hrm/bank/Bank.hbm.xml" />
+		<mapping resource="com/prov/hrm/country/Country.hbm.xml" />
+		<mapping resource="com/prov/hrm/department/Department.hbm.xml" />
+		<mapping resource="com/prov/hrm/designation/Designation.hbm.xml" />
+		<mapping resource="com/prov/hrm/educationlevel/EducationLevel.hbm.xml" />
+		<mapping resource="com/prov/hrm/employeebank/EmployeeBank.hbm.xml" />
+		<mapping resource="com/prov/hrm/employeeeducation/EmployeeEducation.hbm.xml" />
+		<mapping resource="com/prov/hrm/employeeidproof/EmployeeIdproof.hbm.xml" />
+		<mapping resource="com/prov/hrm/employeeleave/EmployeeLeave.hbm.xml" />
+		<mapping resource="com/prov/hrm/employeeleaveeligibility/EmployeeLeaveEligibility.hbm.xml" />
+		<mapping resource="com/prov/hrm/employee/Employee.hbm.xml" />
+		<mapping resource="com/prov/hrm/employeemarital/EmployeeMarital.hbm.xml"/> 
+		<mapping resource="com/prov/hrm/employeepersonal/EmployeePersonal.hbm.xml" />
+		<mapping resource="com/prov/hrm/employeesalary/EmployeeSalary.hbm.xml" />
+		<mapping resource="com/prov/hrm/employeevisa/EmployeeVisa.hbm.xml" />
+		<mapping resource="com/prov/hrm/holiday/Holiday.hbm.xml" />
+		<mapping resource="com/prov/hrm/holidaylist/HolidayList.hbm.xml" />
+		<mapping resource="com/prov/hrm/idtype/Idtype.hbm.xml" />
+		<mapping resource="com/prov/hrm/leavetype/LeaveType.hbm.xml" />
+		<mapping resource="com/prov/hrm/Mail/LeaveRequestMail.hbm.xml" />
+  		<mapping resource="com/prov/hrm/leavetypescheme/LeaveTypeScheme.hbm.xml" />
+  		<mapping resource="com/prov/hrm/leaveconfiguration/LeaveConfiguration.hbm.xml" />
+		<mapping resource="com/prov/hrm/login/Login.hbm.xml"/>
+		<mapping resource="com/prov/hrm/organization/Organization.hbm.xml" />
+		<mapping resource="com/prov/hrm/role/Role.hbm.xml" />
+		<mapping resource="com/prov/hrm/screen/Screen.hbm.xml" />
+		<mapping resource="com/prov/hrm/stateprovince/StateProvince.hbm.xml" />
+		<mapping resource="com/prov/hrm/visatype/VisaType.hbm.xml" />
+  		<mapping resource="com/prov/hrm/screenauths/ScreenAuth.hbm.xml" /> 
+   		
+  
+	
+
+	</session-factory>
+</hibernate-configuration>
+        

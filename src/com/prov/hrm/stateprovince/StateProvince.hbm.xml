@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.stateprovince.StateProvince" table="tblstateprovince">
+        <id name="stateprovinceId" type="java.lang.Integer">
+            <column name="stateprovince_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="country" class="com.prov.hrm.country.Country" lazy="false">
+            <column name="country_id" not-null="true" />
+
+        </many-to-one>
+        <property name="stateprovince" type="string">
+            <column name="stateprovince" length="20" not-null="true" />
+        </property>
+        <property name="insertBy" type="java.lang.Integer">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="boolean">
+            <column name="delete_flag" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

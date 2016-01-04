@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.prov.hrm.leaveconfiguration.LeaveConfiguration" table="tblleaveconfiguration">
+        <id name="leaveconfigurationId" type="java.lang.Integer">
+            <column name="leave_configuration_id" />
+            <generator class="identity" />
+        </id>
+        <property name="organizationId" type="int">
+            <column name="organization_id" not-null="true" />
+        </property>
+        
+        <many-to-one name="leaveTypeScheme" class="com.prov.hrm.leavetypescheme.LeaveTypeScheme" lazy="false">
+            <column name="leavetype_scheme_id" not-null="true" />
+        </many-to-one>
+         <many-to-one name="leavetype" class="com.prov.hrm.leavetype.LeaveType" lazy="false">
+            <column name="leavetype_id" not-null="true" />
+        </many-to-one>
+         <property name="leavePeriod" type="string">
+            <column name="leave_period"  />
+        </property>
+        
+        <property name="leaveEligibledays" type="java.lang.Integer">
+            <column name="leave_eligible_days" not-null="true" />
+        </property>
+        <property name="leaveEffectiveFrom" type="string">
+            <column name="leave_effictive_from" not-null="true" />
+        </property>
+         <property name="leaveEffectiveTo" type="string">
+            <column name="leave_effictive_to"  />
+        </property>
+        <property name="insertBy" type="java.lang.Integer">
+            <column name="insert_by" />
+        </property>
+        <property name="insertDate" type="string">
+            <column name="insert_date" length="0" />
+        </property>
+        <property name="updateBy" type="java.lang.Integer">
+            <column name="update_by" />
+        </property>
+        <property name="updateDate" type="string">
+            <column name="update_date" length="0" />
+        </property>
+        <property name="deleteFlag" type="java.lang.Boolean">
+            <column name="delete_flag" />
+        </property>
+                 
+                </class>
+</hibernate-mapping>
